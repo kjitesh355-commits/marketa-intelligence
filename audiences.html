@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audiences — MARKETA Intelligence</title>
+  <meta name="description" content="Build and manage precision audience segments based on behavior and purchase data." />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="bg-perspective-grid"></div>
+<div class="bg-ambient-glow"></div>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div class="logo-text">MARKETA<span>AI</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+      <a href="analytics.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Analytics</a>
+      <a href="social.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Social Checker</a>
+      <a href="automation.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>Automation<span class="nav-badge">0</span></a>
+      <a href="audiences.html" class="nav-link active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Audiences</a>
+      <a href="seo.html" class="nav-link" id="nav-seo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>SEO Checker</a>
+      <div class="nav-section-label">Research</div>
+      <a href="research.html" class="nav-link" id="nav-research"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Research Library</a>
+      <a href="keyword-research.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>Keyword Research<span class="nav-badge" style="background:var(--amber);color:#000">NEW</span></a>
+      <a href="marketing-agent.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>AI Agent<span class="nav-badge" style="background:var(--cyan);color:#000">NEW</span></a>
+      <div class="nav-section-label">Campaigns</div>
+      <a href="dashboard.html#campaigns" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Campaigns<span class="nav-badge">0</span></a>
+      <a href="integrations.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Integrations</a>
+      <a href="#" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
+      <a href="#" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>SMS</a>
+  </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar-placeholder sm" id="sidebar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Set your name</div>
+          <div class="sidebar-user-role">Click to set up profile</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title">Audiences</div>
+        <div class="topbar-subtitle" id="greeting-text"></div>
+      </div>
+      <div class="topbar-clock" id="topbar-clock"></div>
+      <div class="topbar-search">
+        <svg class="topbar-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" placeholder="Search segments…" id="audience-search" />
+      </div>
+      <div class="topbar-actions">
+        <button class="notif-btn" onclick="showToast('3 notifications','info')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar-placeholder sm" id="topbar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+      </div>
+    </header>
+
+    <div class="page-inner">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Audience Segments</h1>
+          <p class="page-description">Build precise audiences based on behavior, demographics, and purchase signals</p>
+        </div>
+        <div class="page-header-actions">
+          <button class="btn btn-ghost btn-sm" onclick="showToast('Syncing audience data…','info')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Sync CRM
+          </button>
+          <button class="btn btn-primary btn-sm" id="create-segment-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Segment
+          </button>
+        </div>
+      </div>
+
+      <!-- Total Audience Growth Chart -->
+      <div class="glass-card chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Total Audience Growth</div>
+            <div class="chart-card-subtitle">0 total contacts — growing -- YoY</div>
+          </div>
+          <span class="badge" style="font-size:0.8125rem;background:var(--text-muted);color:#000">
+            <span class="dot" style="background:var(--text-muted)"></span>
+            Not Connected
+          </span>
+        </div>
+        <div style="height:200px"><canvas id="audienceGrowthChart"></canvas></div>
+      </div>
+
+      <!-- Segment Grid -->
+      <div class="segment-grid" id="segment-grid">
+        <!-- Rendered by audiences.js -->
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ── Segment Detail Modal ──────────────────────────────── -->
+<div class="modal-overlay" id="segment-modal-overlay">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:var(--space-3)">
+        <div id="seg-modal-icon" style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.125rem;flex-shrink:0"></div>
+        <div class="modal-title" id="seg-modal-name"></div>
+      </div>
+      <button onclick="closeModal('segment-modal-overlay')" class="btn-icon" style="font-size:1.2rem">×</button>
+    </div>
+    <p id="seg-modal-desc" style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:var(--space-6)"></p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4);margin-bottom:var(--space-6)">
+      <div class="glass-card" style="padding:var(--space-4)">
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:var(--space-1)">Total Contacts</div>
+        <div style="font-size:1.5rem;font-weight:800" id="seg-modal-count">—</div>
+      </div>
+      <div class="glass-card" style="padding:var(--space-4)">
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:var(--space-1)">Avg. LTV</div>
+        <div style="font-size:1.5rem;font-weight:800" id="seg-modal-ltv">—</div>
+      </div>
+      <div class="glass-card" style="padding:var(--space-4)">
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:var(--space-1)">Engagement Score</div>
+        <div style="font-size:1.5rem;font-weight:800" id="seg-modal-engagement">—</div>
+      </div>
+      <div class="glass-card" style="padding:var(--space-4)">
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:var(--space-1)">Churn Risk</div>
+        <div style="font-size:1.5rem;font-weight:800" id="seg-modal-churn">—</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-6);padding:var(--space-4);background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-md)">
+      <span style="font-size:0.875rem;color:var(--text-secondary)">Monthly Growth</span>
+      <span style="font-size:1rem;font-weight:700" id="seg-modal-growth">—</span>
+    </div>
+    <div style="display:flex;gap:var(--space-3);justify-content:flex-end">
+      <button class="btn btn-ghost" onclick="closeModal('segment-modal-overlay')">Close</button>
+      <button class="btn btn-primary" onclick="closeModal('segment-modal-overlay');showToast('Campaign queued for this segment!','success')">Send Campaign</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Create Segment Modal ──────────────────────────────── -->
+<div class="modal-overlay" id="create-segment-modal-overlay">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <div class="modal-title">Create New Segment</div>
+      <button onclick="closeModal('create-segment-modal-overlay')" class="btn-icon" style="font-size:1.2rem">×</button>
+    </div>
+    <form id="create-segment-form" style="display:flex;flex-direction:column;gap:var(--space-5)">
+      <div class="form-group">
+        <label class="form-label" for="seg-name">Segment Name</label>
+        <input class="form-input" id="seg-name" placeholder="e.g. High-Intent Mobile Users" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Primary Filter</label>
+        <select class="form-select">
+          <option>Purchase History</option>
+          <option>Engagement Level</option>
+          <option>Geographic Location</option>
+          <option>Browsing Behavior</option>
+          <option>Device Type</option>
+          <option>Email Activity</option>
+          <option>Customer Since</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Condition</label>
+        <select class="form-select">
+          <option>Greater than</option>
+          <option>Less than</option>
+          <option>Equals</option>
+          <option>Contains</option>
+          <option>Is in range</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="seg-value">Value</label>
+        <input class="form-input" id="seg-value" placeholder="e.g. 500, Mumbai, Active" />
+      </div>
+      <div style="display:flex;gap:var(--space-3);justify-content:flex-end;margin-top:var(--space-2)">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('create-segment-modal-overlay')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Segment</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/audiences.js"></script>
+
+
+<!-- Animation Libraries (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<!-- Animation Scripts -->
+<script src="js/animations/scroll-reveal.js"></script>
+
+<script src="js/animations/gradient-border.js"></script>
+<script src="js/chatbot.js"></script>
+
+<!-- ── AI Marketing Chatbot Widget ─────────────────────────── -->
+<div id="chat-widget" class="chat-widget" data-page-context="audiences">
+  <button class="chat-toggle" id="chat-toggle" aria-label="Toggle AI Assistant">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="12" cy="10" r="1"/></svg>
+  </button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-header-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div>
+          <div class="chat-header-title">AI Marketing Assistant</div>
+          <div class="chat-header-status" id="chat-config-status">
+            <span class="chat-status-dot"></span>
+            No key set
+          </div>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-clear-btn" id="chat-config-btn" aria-label="API key settings" title="Configure API key">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <button class="chat-clear-btn" id="chat-clear" aria-label="Clear conversation" title="Clear conversation">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+        <button class="chat-close-btn" id="chat-close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="chat-config" id="chat-config">
+      <div class="chat-config-row">
+        <input type="password" id="config-key" class="chat-config-input" placeholder="Paste your Gemini API key..." autocomplete="off" style="flex:1" />
+        <button class="chat-config-save" id="config-save">Save</button>
+      </div>
+      <div class="chat-config-hint">Get a free key at aistudio.google.com — Only Gemini 2.5 Flash is used.</div>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg bot">
+        <div class="msg-avatar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div class="msg-content">
+          <div class="msg-text">Hi! I'm your marketing AI. Ask me about SEO, analytics, or the audit results on this page.</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-suggestions" id="chat-suggestions">
+      <div class="suggestion-chip">How do I improve my SEO score?</div>
+      <div class="suggestion-chip">Explain Google Analytics bounce rate</div>
+      <div class="suggestion-chip">What is LCP in Core Web Vitals?</div>
+      <div class="suggestion-chip">Tips for social media</div>
+    </div>
+    <div class="chat-input-bar">
+      <input type="text" id="chat-input" placeholder="Ask about marketing, SEO, or data..." autocomplete="off" />
+      <button class="chat-send-btn" id="chat-send" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="js/profile.js"></script>
+</body>
+</html>

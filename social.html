@@ -1,0 +1,1167 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Media Checker — MARKETA Intelligence</title>
+  <meta name="description" content="Check social media stats across YouTube, Instagram, TikTok, X, LinkedIn, and Facebook." />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <style>
+    .checker-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Input Section */
+    .url-input-section {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .url-input-row {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .url-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+    .url-input-wrap input {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+      background: rgba(0,0,0,0.3);
+      color: var(--text-primary);
+      font-size: 0.9375rem;
+      transition: border-color 0.2s;
+    }
+    .url-input-wrap input:focus { outline: none; border-color: var(--indigo); }
+    .url-input-wrap input::placeholder { color: var(--text-muted); }
+    .url-input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    .platform-badge {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: none;
+    }
+    .platform-badge.visible { display: inline-block; }
+    .platform-badge.youtube { background: rgba(255,0,0,0.15); color: #ff0000; }
+    .platform-badge.instagram { background: rgba(225,48,108,0.15); color: #e1306c; }
+    .platform-badge.tiktok { background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+    .platform-badge.twitter { background: rgba(29,161,242,0.15); color: #1da1f2; }
+    .platform-badge.linkedin { background: rgba(0,119,181,0.15); color: #0077b5; }
+    .platform-badge.facebook { background: rgba(24,119,242,0.15); color: #1877f2; }
+    .platform-badge.unknown { background: rgba(255,255,255,0.1); color: var(--text-muted); }
+
+    .check-btn {
+      padding: 14px 28px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .check-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,102,241,0.35); }
+    .check-btn:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
+
+    /* Platform Cards Grid */
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    .platform-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .platform-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .platform-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    .platform-card.youtube::before { background: linear-gradient(90deg, #ff0000, #ff4444); }
+    .platform-card.instagram::before { background: linear-gradient(90deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .platform-card.tiktok::before { background: linear-gradient(90deg, #00f2ea, #ff0050); }
+    .platform-card.twitter::before { background: linear-gradient(90deg, #1da1f2, #0d8ecf); }
+    .platform-card.linkedin::before { background: linear-gradient(90deg, #0077b5, #00a0dc); }
+    .platform-card.facebook::before { background: linear-gradient(90deg, #1877f2, #42b72a); }
+
+    .platform-card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: var(--space-5);
+    }
+    .platform-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .platform-card.youtube .platform-icon { background: rgba(255,0,0,0.12); }
+    .platform-card.instagram .platform-icon { background: rgba(225,48,108,0.12); }
+    .platform-card.tiktok .platform-icon { background: rgba(255,255,255,0.08); }
+    .platform-card.twitter .platform-icon { background: rgba(29,161,242,0.12); }
+    .platform-card.linkedin .platform-icon { background: rgba(0,119,181,0.12); }
+    .platform-card.facebook .platform-icon { background: rgba(24,119,242,0.12); }
+
+    .platform-name {
+      font-size: 1.125rem;
+      font-weight: 800;
+    }
+    .platform-handle {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .platform-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+    .platform-stat {
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      text-align: center;
+    }
+    .platform-stat-value {
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .platform-stat-label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .platform-card.youtube .platform-stat-value { color: #ff4444; }
+    .platform-card.instagram .platform-stat-value { color: #e1306c; }
+    .platform-card.tiktok .platform-stat-value { color: #00f2ea; }
+    .platform-card.twitter .platform-stat-value { color: #1da1f2; }
+    .platform-card.linkedin .platform-stat-value { color: #0077b5; }
+    .platform-card.facebook .platform-stat-value { color: #1877f2; }
+
+    .platform-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--glass-border);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .status-dot.active { background: #10b981; animation: pulse 2s infinite; }
+    .status-dot.inactive { background: #f59e0b; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Recent Content */
+    .recent-section {
+      margin-top: var(--space-6);
+    }
+    .recent-section h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .recent-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+    .recent-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .recent-card:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-2px); }
+    .recent-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+    .recent-info {
+      padding: 12px;
+    }
+    .recent-title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.3;
+    }
+    .recent-meta {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Loading */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .loading-overlay.visible { display: flex; }
+    .loading-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--glass-border);
+      border-top-color: var(--indigo);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto var(--space-4);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { color: var(--text-secondary); font-size: 0.9375rem; }
+
+    /* Error */
+    .error-toast {
+      display: none;
+      background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #ef4444;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-4);
+      font-size: 0.875rem;
+    }
+    .error-toast.visible { display: block; }
+  </style>
+</head>
+<body>
+<div class="bg-perspective-grid"></div>
+<div class="bg-ambient-glow"></div>
+<div class="glow-orb glow-1"></div>
+<div class="glow-orb glow-2"></div>
+
+<div class="app-shell">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div class="logo-text">MARKETA<span>AI</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+      <a href="analytics.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Analytics</a>
+      <a href="social.html" class="nav-link active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Social Checker</a>
+      <a href="automation.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>Automation</a>
+      <a href="audiences.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Audiences</a>
+      <a href="seo.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>SEO Checker</a>
+      <div class="nav-section-label">Research</div>
+      <a href="research.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Research Library</a>
+      <a href="keyword-research.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>Keyword Research<span class="nav-badge" style="background:var(--amber);color:#000">NEW</span></a>
+      <a href="marketing-agent.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>AI Agent<span class="nav-badge" style="background:var(--cyan);color:#000">NEW</span></a>
+      <a href="integrations.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Integrations</a>
+  </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar-placeholder sm" id="sidebar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Set your name</div>
+          <div class="sidebar-user-role">Click to set up profile</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title">Social Media Checker</div>
+        <div class="topbar-subtitle" id="greeting-text"></div>
+      </div>
+      <div class="topbar-clock" id="topbar-clock"></div>
+      <div class="topbar-actions">
+        <button class="notif-btn" onclick="showToast('3 notifications','info')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar-placeholder sm" id="topbar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+      </div>
+    </header>
+
+    <div class="page-inner">
+      <div class="checker-container">
+
+        <!-- URL Input Section -->
+        <div class="url-input-section animate-fade-up" style="margin-bottom:var(--space-6)">
+          <div class="glass-card" style="padding:var(--space-6)">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:var(--space-4)">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(99,102,241,0.12);display:flex;align-items:center;justify-content:center">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              </div>
+              <div>
+                <div style="font-weight:700;font-size:0.9375rem">Paste Social Media Link</div>
+                <div style="font-size:0.8125rem;color:var(--text-secondary)">Enter any YouTube, Instagram, TikTok, X, LinkedIn, or Facebook URL to see insights</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:stretch">
+              <div style="flex:1;position:relative">
+                <input type="text" id="social-url-input" placeholder="https://youtube.com/@channel or instagram.com/username..." style="width:100%;padding:14px 16px 14px 44px;border-radius:var(--radius-md);border:1px solid var(--glass-border);background:rgba(0,0,0,0.3);color:var(--text-primary);font-size:0.9375rem;transition:border-color 0.2s" autocomplete="off" />
+                <svg class="url-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" style="position:absolute;left:14px;top:50%;transform:translateY(-50%)"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span class="platform-badge" id="platform-badge"></span>
+              </div>
+              <button class="check-btn" id="analyze-btn" onclick="analyzeUrl()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-2px;margin-right:4px"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                Analyze
+              </button>
+            </div>
+            <div style="margin-top:var(--space-3);display:flex;gap:8px;flex-wrap:wrap">
+              <span style="font-size:0.75rem;color:var(--text-muted)">Paste a URL above to get started</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analysis Results (Hidden by default) -->
+        <div id="analysis-results" style="display:none;margin-bottom:var(--space-6)">
+          <div class="glass-card" style="padding:var(--space-6)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4)">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div id="result-platform-icon" style="width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center"></div>
+                <div>
+                  <div id="result-platform-name" style="font-weight:800;font-size:1.125rem"></div>
+                  <div id="result-profile-url" style="font-size:0.8125rem;color:var(--text-muted)"></div>
+                </div>
+              </div>
+              <button class="btn btn-ghost btn-sm" onclick="closeAnalysis()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Close
+              </button>
+            </div>
+            <div id="result-stats" class="platform-stats" style="margin-bottom:var(--space-4)"></div>
+            <div id="result-insights" style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:var(--radius-md);padding:var(--space-4)">
+              <div style="font-weight:700;font-size:0.875rem;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                AI Insights
+              </div>
+              <div id="result-insights-text" style="font-size:0.8125rem;color:var(--text-secondary);line-height:1.6"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Share Section -->
+        <div class="share-section animate-fade-up" style="margin-bottom:var(--space-6)">
+          <div class="glass-card" style="padding:var(--space-5);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4)">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(99,102,241,0.12);display:flex;align-items:center;justify-content:center">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              </div>
+              <div>
+                <div style="font-weight:700;font-size:0.9375rem">Share Social Media Report</div>
+                <div style="font-size:0.8125rem;color:var(--text-secondary)">Send this link to your team to view all platform stats</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-primary btn-sm" id="share-btn" onclick="shareLink()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                Copy Link
+              </button>
+              <button class="btn btn-ghost btn-sm" onclick="downloadReport()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- All Platforms Grid (Always Visible) -->
+        <div class="platforms-grid" id="platforms-grid">
+          <!-- YouTube -->
+          <div class="platform-card youtube animate-fade-up">
+            <div class="platform-card-header">
+              <div class="platform-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff0000" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#ff0000"/></svg>
+              </div>
+              <div>
+                <div class="platform-name">YouTube</div>
+                <div class="platform-handle">Video Platform</div>
+              </div>
+            </div>
+            <div class="platform-stats">
+              <div class="platform-stat">
+                <div class="platform-stat-value" id="yt-subs">0</div>
+                <div class="platform-stat-label">Subscribers</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value" id="yt-views">0</div>
+                <div class="platform-stat-label">Total Views</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value" id="yt-videos">0</div>
+                <div class="platform-stat-label">Videos</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value" id="yt-engagement">0%</div>
+                <div class="platform-stat-label">Engagement</div>
+              </div>
+            </div>
+            <div class="platform-status">
+              <span class="status-dot active"></span>
+              <span style="color:var(--text-secondary)">Live data via YouTube Data API v3</span>
+            </div>
+          </div>
+
+          <!-- Instagram -->
+          <div class="platform-card instagram animate-fade-up delay-100">
+            <div class="platform-card-header">
+              <div class="platform-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </div>
+              <div>
+                <div class="platform-name">Instagram</div>
+                <div class="platform-handle">Photo & Video Sharing</div>
+              </div>
+            </div>
+            <div class="platform-stats">
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Followers</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Posts</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0%</div>
+                <div class="platform-stat-label">Engagement</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Avg. Likes</div>
+              </div>
+            </div>
+            <div class="platform-status">
+              <span class="status-dot inactive"></span>
+              <span style="color:var(--text-secondary)">Connect account for live data</span>
+            </div>
+          </div>
+
+          <!-- TikTok -->
+          <div class="platform-card tiktok animate-fade-up delay-200">
+            <div class="platform-card-header">
+              <div class="platform-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+              </div>
+              <div>
+                <div class="platform-name">TikTok</div>
+                <div class="platform-handle">Short-Form Video</div>
+              </div>
+            </div>
+            <div class="platform-stats">
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Followers</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Likes</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Videos</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0%</div>
+                <div class="platform-stat-label">Engagement</div>
+              </div>
+            </div>
+            <div class="platform-status">
+              <span class="status-dot inactive"></span>
+              <span style="color:var(--text-secondary)">Connect account for live data</span>
+            </div>
+          </div>
+
+          <!-- X (Twitter) -->
+          <div class="platform-card twitter animate-fade-up delay-300">
+            <div class="platform-card-header">
+              <div class="platform-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1da1f2" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+              </div>
+              <div>
+                <div class="platform-name">X (Twitter)</div>
+                <div class="platform-handle">Microblogging</div>
+              </div>
+            </div>
+            <div class="platform-stats">
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Followers</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Posts</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0%</div>
+                <div class="platform-stat-label">Engagement</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Avg. Likes</div>
+              </div>
+            </div>
+            <div class="platform-status">
+              <span class="status-dot inactive"></span>
+              <span style="color:var(--text-secondary)">Connect account for live data</span>
+            </div>
+          </div>
+
+          <!-- LinkedIn -->
+          <div class="platform-card linkedin animate-fade-up delay-400">
+            <div class="platform-card-header">
+              <div class="platform-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0077b5" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </div>
+              <div>
+                <div class="platform-name">LinkedIn</div>
+                <div class="platform-handle">Professional Network</div>
+              </div>
+            </div>
+            <div class="platform-stats">
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Followers</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Posts</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0%</div>
+                <div class="platform-stat-label">Engagement</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Avg. Likes</div>
+              </div>
+            </div>
+            <div class="platform-status">
+              <span class="status-dot inactive"></span>
+              <span style="color:var(--text-secondary)">Connect account for live data</span>
+            </div>
+          </div>
+
+          <!-- Facebook -->
+          <div class="platform-card facebook animate-fade-up delay-500">
+            <div class="platform-card-header">
+              <div class="platform-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1877f2" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </div>
+              <div>
+                <div class="platform-name">Facebook</div>
+                <div class="platform-handle">Social Network</div>
+              </div>
+            </div>
+            <div class="platform-stats">
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Followers</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Posts</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0%</div>
+                <div class="platform-stat-label">Engagement</div>
+              </div>
+              <div class="platform-stat">
+                <div class="platform-stat-value">0</div>
+                <div class="platform-stat-label">Avg. Likes</div>
+              </div>
+            </div>
+            <div class="platform-status">
+              <span class="status-dot inactive"></span>
+              <span style="color:var(--text-secondary)">Connect account for live data</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connect Panels (Coming Soon) -->
+        <div class="connect-panels" style="margin-top:var(--space-6);display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4)">
+          <!-- Google Analytics Panel -->
+          <div class="glass-card connect-panel disabled" style="padding:var(--space-6);position:relative;overflow:hidden;opacity:0.7">
+            <div class="coming-soon-badge" style="position:absolute;top:16px;right:16px;background:rgba(245,158,11,0.15);color:#f59e0b;padding:4px 10px;border-radius:6px;font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em">Coming Soon</div>
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:var(--space-4)">
+              <div style="width:56px;height:56px;border-radius:14px;background:rgba(255,193,7,0.12);display:flex;align-items:center;justify-content:center">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+              </div>
+              <div>
+                <div style="font-weight:800;font-size:1.125rem;margin-bottom:4px">Connect Google Analytics</div>
+                <div style="font-size:0.8125rem;color:var(--text-secondary)">Track website traffic, user behavior, and conversion metrics</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:var(--space-4)">
+              <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;text-align:center">
+                <div style="font-size:1.25rem;font-weight:800;color:var(--text-muted)">--</div>
+                <div style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase">Sessions</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;text-align:center">
+                <div style="font-size:1.25rem;font-weight:800;color:var(--text-muted)">--</div>
+                <div style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase">Bounce Rate</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;text-align:center">
+                <div style="font-size:1.25rem;font-weight:800;color:var(--text-muted)">--</div>
+                <div style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase">Avg. Duration</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;text-align:center">
+                <div style="font-size:1.25rem;font-weight:800;color:var(--text-muted)">--</div>
+                <div style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase">Conversions</div>
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-sm" disabled style="width:100%;cursor:not-allowed;opacity:0.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Connect Google Analytics
+            </button>
+          </div>
+
+          <!-- Social Accounts Panel -->
+          <div class="glass-card connect-panel disabled" style="padding:var(--space-6);position:relative;overflow:hidden;opacity:0.7">
+            <div class="coming-soon-badge" style="position:absolute;top:16px;right:16px;background:rgba(245,158,11,0.15);color:#f59e0b;padding:4px 10px;border-radius:6px;font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em">Coming Soon</div>
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:var(--space-4)">
+              <div style="width:56px;height:56px;border-radius:14px;background:rgba(99,102,241,0.12);display:flex;align-items:center;justify-content:center">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              </div>
+              <div>
+                <div style="font-weight:800;font-size:1.125rem;margin-bottom:4px">Connect Social Accounts</div>
+                <div style="font-size:0.8125rem;color:var(--text-secondary)">Instagram, TikTok, X, LinkedIn, and Facebook</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:var(--space-4)">
+              <div style="display:flex;align-items:center;gap:6px;background:rgba(225,48,108,0.1);padding:8px 12px;border-radius:8px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>
+                <span style="font-size:0.75rem;color:#e1306c;font-weight:600">Instagram</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;background:rgba(0,242,234,0.1);padding:8px 12px;border-radius:8px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f2ea" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+                <span style="font-size:0.75rem;color:#00f2ea;font-weight:600">TikTok</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;background:rgba(29,161,242,0.1);padding:8px 12px;border-radius:8px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1da1f2" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+                <span style="font-size:0.75rem;color:#1da1f2;font-weight:600">X</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;background:rgba(0,119,181,0.1);padding:8px 12px;border-radius:8px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0077b5" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span style="font-size:0.75rem;color:#0077b5;font-weight:600">LinkedIn</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;background:rgba(24,119,242,0.1);padding:8px 12px;border-radius:8px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1877f2" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                <span style="font-size:0.75rem;color:#1877f2;font-weight:600">Facebook</span>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:var(--space-4)">
+              <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;text-align:center">
+                <div style="font-size:1.25rem;font-weight:800;color:var(--text-muted)">--</div>
+                <div style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase">Total Followers</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;text-align:center">
+                <div style="font-size:1.25rem;font-weight:800;color:var(--text-muted)">--</div>
+                <div style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase">Engagement</div>
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-sm" disabled style="width:100%;cursor:not-allowed;opacity:0.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              Connect Social Accounts
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="loading-card">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Fetching social media data...</div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+
+<!-- Animation Libraries (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<!-- Animation Scripts -->
+<script src="js/animations/scroll-reveal.js"></script>
+<script src="js/animations/gradient-border.js"></script>
+
+<script>
+// Platform detection patterns
+const PLATFORMS = {
+  youtube: {
+    patterns: [
+      /(?:youtube\.com\/@[\w.-]+)/i,
+      /(?:youtube\.com\/channel\/[\w-]+)/i,
+      /(?:youtube\.com\/user\/[\w.-]+)/i,
+      /(?:youtu\.be\/)/i,
+      /(?:youtube\.com\/watch\?v=)/i
+    ],
+    name: 'YouTube',
+    color: '#ff0000',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff0000" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#ff0000"/></svg>',
+    bg: 'rgba(255,0,0,0.12)'
+  },
+  instagram: {
+    patterns: [/(?:instagram\.com\/[\w.-]+)/i],
+    name: 'Instagram',
+    color: '#e1306c',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>',
+    bg: 'rgba(225,48,108,0.12)'
+  },
+  tiktok: {
+    patterns: [/(?:tiktok\.com\/@[\w.-]+)/i],
+    name: 'TikTok',
+    color: '#00f2ea',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00f2ea" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>',
+    bg: 'rgba(0,242,234,0.12)'
+  },
+  twitter: {
+    patterns: [/(?:twitter\.com\/[\w]+)|(?:x\.com\/[\w]+)/i],
+    name: 'X (Twitter)',
+    color: '#1da1f2',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1da1f2" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>',
+    bg: 'rgba(29,161,242,0.12)'
+  },
+  linkedin: {
+    patterns: [/(?:linkedin\.com\/(?:company|in)\/[\w.-]+)/i],
+    name: 'LinkedIn',
+    color: '#0077b5',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0077b5" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>',
+    bg: 'rgba(0,119,181,0.12)'
+  },
+  facebook: {
+    patterns: [/(?:facebook\.com\/[\w.-]+)|(?:fb\.com\/[\w.-]+)/i],
+    name: 'Facebook',
+    color: '#1877f2',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1877f2" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
+    bg: 'rgba(24,119,242,0.12)'
+  }
+};
+
+function detectPlatform(url) {
+  for (const [key, platform] of Object.entries(PLATFORMS)) {
+    for (const pattern of platform.patterns) {
+      if (pattern.test(url)) return { id: key, ...platform };
+    }
+  }
+  return { id: 'unknown', name: 'Unknown', color: '#666' };
+}
+
+// Quick fill function
+function quickFill(url) {
+  document.getElementById('social-url-input').value = url;
+  document.getElementById('social-url-input').focus();
+  updatePlatformBadge(url);
+}
+
+// Update platform badge on input
+document.addEventListener('DOMContentLoaded', () => {
+  const urlInput = document.getElementById('social-url-input');
+  const platformBadge = document.getElementById('platform-badge');
+
+  urlInput.addEventListener('input', () => {
+    updatePlatformBadge(urlInput.value);
+  });
+
+  urlInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') analyzeUrl();
+  });
+});
+
+function updatePlatformBadge(url) {
+  const platformBadge = document.getElementById('platform-badge');
+  if (url) {
+    const platform = detectPlatform(url);
+    platformBadge.textContent = platform.name;
+    platformBadge.className = 'platform-badge visible ' + platform.id;
+  } else {
+    platformBadge.className = 'platform-badge';
+  }
+}
+
+// Generate simulated insights based on platform
+function generateInsights(platform, username) {
+  const insights = {
+    youtube: `**${username}** is a major YouTube creator with strong engagement metrics. Their content strategy focuses on high-production value videos with consistent upload schedule. Key strengths include high audience retention and strong subscriber loyalty. Recommendation: Consider collaborating for cross-promotion opportunities.`,
+    instagram: `**${username}** has built a strong visual brand on Instagram with high engagement rates. Their content mix of Stories, Reels, and carousel posts drives consistent interaction. Key strengths include strong visual aesthetics and active community engagement. Recommendation: Analyze their hashtag strategy for potential overlaps.`,
+    tiktok: `**${username}** is a top TikTok creator with viral content potential. Their short-form videos consistently gain high views and engagement. Key strengths include trend awareness and authentic content style. Recommendation: Study their content hooks and trending audio usage.`,
+    twitter: `**${username}** maintains an active presence on X with strong thought leadership. Their tweet engagement and retweet rates indicate influential content. Key strengths include timely commentary and strong follower interaction. Recommendation: Monitor their trending topics for industry insights.`,
+    linkedin: `**${username}** has established strong professional credibility on LinkedIn. Their content drives meaningful industry conversations and networking opportunities. Key strengths include professional thought leadership and B2B engagement. Recommendation: Analyze their content strategy for professional audience targeting.`,
+    facebook: `**${username}** maintains an engaged community on Facebook with consistent interaction rates. Their content mix of posts, videos, and community updates drives strong engagement. Key strengths include community building and event promotion. Recommendation: Study their audience interaction patterns for community management insights.`
+  };
+  return insights[platform] || 'Analysis complete. The profile shows healthy engagement metrics across key performance indicators.';
+}
+
+// Analyze URL function
+function analyzeUrl() {
+  const url = document.getElementById('social-url-input').value.trim();
+  if (!url) {
+    showToast('Please enter a social media URL', 'error');
+    return;
+  }
+
+  const platform = detectPlatform(url);
+  if (platform.id === 'username') {
+    showToast('Could not detect platform. Please use a valid social media URL.', 'error');
+    return;
+  }
+
+  // Extract username from URL
+  let username = 'user';
+  if (url.includes('/@')) username = url.split('/@')[1].split('/')[0].split('?')[0];
+  else if (url.includes('/channel/')) username = url.split('/channel/')[1].split('/')[0];
+  else if (url.includes('/user/')) username = url.split('/user/')[1].split('/')[0];
+  else if (url.includes('/company/')) username = url.split('/company/')[1].split('/')[0];
+  else if (url.includes('/in/')) username = url.split('/in/')[1].split('/')[0];
+  else if (url.includes('facebook.com/')) username = url.split('facebook.com/')[1].split('/')[0];
+  else if (url.includes('x.com/') || url.includes('twitter.com/')) username = url.split(/x\.com|twitter\.com/)[1].split('/')[1]?.split('?')[0] || 'user';
+
+  // Show results
+  const resultsDiv = document.getElementById('analysis-results');
+  const platformIcon = document.getElementById('result-platform-icon');
+  const platformName = document.getElementById('result-platform-name');
+  const profileUrl = document.getElementById('result-profile-url');
+  const statsDiv = document.getElementById('result-stats');
+  const insightsText = document.getElementById('result-insights-text');
+
+  platformIcon.innerHTML = platform.icon;
+  platformIcon.style.background = platform.bg;
+  platformName.textContent = platform.name;
+  platformName.style.color = platform.color;
+  profileUrl.textContent = url;
+
+  // Generate stats based on platform
+  const stats = {
+    youtube: [
+      { value: '0', label: 'Subscribers' },
+      { value: '0', label: 'Total Views' },
+      { value: '0', label: 'Videos' },
+      { value: '0%', label: 'Engagement' }
+    ],
+    instagram: [
+      { value: '0', label: 'Followers' },
+      { value: '0', label: 'Posts' },
+      { value: '0%', label: 'Engagement' },
+      { value: '0', label: 'Avg. Likes' }
+    ],
+    tiktok: [
+      { value: '0', label: 'Followers' },
+      { value: '0', label: 'Likes' },
+      { value: '0', label: 'Videos' },
+      { value: '0%', label: 'Engagement' }
+    ],
+    twitter: [
+      { value: '0', label: 'Followers' },
+      { value: '0', label: 'Posts' },
+      { value: '0%', label: 'Engagement' },
+      { value: '0', label: 'Avg. Likes' }
+    ],
+    linkedin: [
+      { value: '0', label: 'Followers' },
+      { value: '0', label: 'Posts' },
+      { value: '0%', label: 'Engagement' },
+      { value: '0', label: 'Avg. Likes' }
+    ],
+    facebook: [
+      { value: '0', label: 'Followers' },
+      { value: '0', label: 'Posts' },
+      { value: '0%', label: 'Engagement' },
+      { value: '0', label: 'Avg. Likes' }
+    ]
+  };
+
+  const platformStats = stats[platform.id] || stats.youtube;
+  statsDiv.innerHTML = platformStats.map(stat => `
+    <div class="platform-stat">
+      <div class="platform-stat-value" style="color:${platform.color}">${stat.value}</div>
+      <div class="platform-stat-label">${stat.label}</div>
+    </div>
+  `).join('');
+
+  insightsText.textContent = generateInsights(platform.id, username);
+  resultsDiv.style.display = 'block';
+
+  // Scroll to results
+  resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Close analysis
+function closeAnalysis() {
+  document.getElementById('analysis-results').style.display = 'none';
+  document.getElementById('social-url-input').value = '';
+  document.getElementById('platform-badge').className = 'platform-badge';
+}
+
+// Animate numbers on load
+document.addEventListener('DOMContentLoaded', () => {
+  function animateValue(el, start, end, duration, suffix = '') {
+    const startTime = performance.now();
+    function tick(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(start + (end - start) * eased);
+      el.textContent = formatNum(current) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function formatNum(n) {
+    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+    return n.toString();
+  }
+
+  // Stats start at 0 (empty state)
+});
+
+// Share link function
+function shareLink() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('Link copied to clipboard!', 'success');
+    const btn = document.getElementById('share-btn');
+    if (btn) {
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+      setTimeout(() => {
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Copy Link';
+      }, 2000);
+    }
+  }).catch(() => {
+    showToast('Failed to copy link', 'error');
+  });
+}
+
+// Download report function
+function downloadReport() {
+  const report = generateReport();
+  const blob = new Blob([report], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'social-media-report.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Report downloaded!', 'success');
+}
+
+// Generate HTML report
+function generateReport() {
+  const platforms = [
+    { name: 'YouTube', icon: '📺', subs: '0', views: '0', videos: '0', engagement: '0%', color: '#ff0000' },
+    { name: 'Instagram', icon: '📸', subs: '0', posts: '0', engagement: '0%', likes: '0', color: '#e1306c' },
+    { name: 'TikTok', icon: '🎵', subs: '0', likes: '0', videos: '0', engagement: '0%', color: '#00f2ea' },
+    { name: 'X (Twitter)', icon: '🐦', subs: '0', posts: '0', engagement: '0%', likes: '0', color: '#1da1f2' },
+    { name: 'LinkedIn', icon: '💼', subs: '0', posts: '0', engagement: '0%', likes: '0', color: '#0077b5' },
+    { name: 'Facebook', icon: '👥', subs: '0', posts: '0', engagement: '0%', likes: '0', color: '#1877f2' }
+  ];
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Report - MARKETA Intelligence</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f1a; color: #fff; padding: 40px; }
+    .header { text-align: center; margin-bottom: 40px; }
+    .header h1 { font-size: 2rem; margin-bottom: 8px; }
+    .header p { color: #888; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .card-icon { font-size: 2rem; }
+    .card-title { font-size: 1.25rem; font-weight: 700; }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat { background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; text-align: center; }
+    .stat-value { font-size: 1.5rem; font-weight: 800; }
+    .stat-label { font-size: 0.75rem; color: #888; text-transform: uppercase; }
+    .footer { text-align: center; margin-top: 40px; color: #666; font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📊 Social Media Report</h1>
+    <p>Generated on ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+  </div>
+  <div class="grid">
+    ${platforms.map(p => `
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">${p.icon}</span>
+          <span class="card-title" style="color:${p.color}">${p.name}</span>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-value" style="color:${p.color}">${p.subs}</div>
+            <div class="stat-label">Followers</div>
+          </div>
+          ${p.views ? `<div class="stat"><div class="stat-value" style="color:${p.color}">${p.views}</div><div class="stat-label">Views</div></div>` : ''}
+          ${p.posts ? `<div class="stat"><div class="stat-value" style="color:${p.color}">${p.posts}</div><div class="stat-label">Posts</div></div>` : ''}
+          ${p.likes ? `<div class="stat"><div class="stat-value" style="color:${p.color}">${p.likes}</div><div class="stat-label">Likes</div></div>` : ''}
+          ${p.videos ? `<div class="stat"><div class="stat-value" style="color:${p.color}">${p.videos}</div><div class="stat-label">Videos</div></div>` : ''}
+          <div class="stat">
+            <div class="stat-value" style="color:${p.color}">${p.engagement}</div>
+            <div class="stat-label">Engagement</div>
+          </div>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+  <div class="footer">
+    <p>Report generated by MARKETA Intelligence</p>
+  </div>
+</body>
+</html>`;
+}
+</script>
+<script src="js/chatbot.js"></script>
+
+<!-- ── AI Marketing Chatbot Widget ─────────────────────────── -->
+<div id="chat-widget" class="chat-widget" data-page-context="social">
+  <button class="chat-toggle" id="chat-toggle" aria-label="Toggle AI Assistant">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="12" cy="10" r="1"/></svg>
+  </button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-header-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div>
+          <div class="chat-header-title">AI Marketing Assistant</div>
+          <div class="chat-header-status" id="chat-config-status">
+            <span class="chat-status-dot"></span>
+            No key set
+          </div>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-clear-btn" id="chat-config-btn" aria-label="API key settings" title="Configure API key">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <button class="chat-clear-btn" id="chat-clear" aria-label="Clear conversation" title="Clear conversation">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+        <button class="chat-close-btn" id="chat-close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="chat-config" id="chat-config">
+      <div class="chat-config-row">
+        <input type="password" id="config-key" class="chat-config-input" placeholder="Paste your Gemini API key..." autocomplete="off" style="flex:1" />
+        <button class="chat-config-save" id="config-save">Save</button>
+      </div>
+      <div class="chat-config-hint">Get a free key at aistudio.google.com — Only Gemini 2.5 Flash is used.</div>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg bot">
+        <div class="msg-avatar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div class="msg-content">
+          <div class="msg-text">Hi! I'm your marketing AI. Ask me about SEO, analytics, or the audit results on this page.</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-suggestions" id="chat-suggestions">
+      <div class="suggestion-chip">How do I improve my SEO score?</div>
+      <div class="suggestion-chip">Explain Google Analytics bounce rate</div>
+      <div class="suggestion-chip">What is LCP in Core Web Vitals?</div>
+      <div class="suggestion-chip">Tips for social media</div>
+    </div>
+    <div class="chat-input-bar">
+      <input type="text" id="chat-input" placeholder="Ask about marketing, SEO, or data..." autocomplete="off" />
+      <button class="chat-send-btn" id="chat-send" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="js/profile.js"></script>
+</body>
+</html>

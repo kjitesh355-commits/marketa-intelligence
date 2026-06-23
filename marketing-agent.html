@@ -1,0 +1,324 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance Marketing AI Agent — MARKETA Intelligence</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/marketing-agent.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+<body>
+<div class="bg-perspective-grid"></div>
+<div class="bg-ambient-glow"></div>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+
+<div class="app-shell">
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div class="logo-text">MARKETA<span>AI</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+      <a href="analytics.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Analytics</a>
+      <a href="social.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Social Checker</a>
+      <a href="automation.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>Automation<span class="nav-badge pulse-badge">0</span></a>
+      <a href="audiences.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Audiences</a>
+      <a href="seo.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>SEO Checker</a>
+      <div class="nav-section-label">Research</div>
+      <a href="research.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Research Library</a>
+      <a href="keyword-research.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>Keyword Research<span class="nav-badge" style="background:var(--amber);color:#000">NEW</span></a>
+      <a href="marketing-agent.html" class="nav-link active sidebar-glow-active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>AI Agent<span class="nav-badge" style="background:var(--cyan);color:#000">NEW</span></a>
+      <div class="nav-section-label">Campaigns</div>
+      <a href="dashboard.html#campaigns" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Campaigns<span class="nav-badge">0</span></a>
+      <a href="integrations.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Integrations</a>
+  </nav>
+    <!-- Recent Analyses -->
+    <div class="sidebar-recent" id="sidebar-recent">
+      <div class="nav-section-label">Recent Analyses</div>
+      <div class="recent-list" id="recent-list"></div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar-placeholder sm" id="sidebar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Set your name</div>
+          <div class="sidebar-user-role">Click to set up profile</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main ───────────────────────────────────────────── -->
+  <main class="main-content">
+    <header class="topbar">
+      <button class="mobile-menu-btn" id="menu-toggle" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="topbar-left">
+        <div class="topbar-title">Performance Marketing AI Agent</div>
+        <div class="topbar-subtitle" id="greeting-text"></div>
+      </div>
+      <div class="topbar-clock" id="topbar-clock"></div>
+      <div class="topbar-actions">
+        <div class="agent-status-badge" id="agent-status-badge">
+          <div class="status-orb" id="status-orb"></div>
+          <span id="status-text">Ready</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-inner">
+
+      <!-- Mode Switcher -->
+      <div class="mode-switcher">
+        <button class="mode-btn active" data-mode="analyze">
+          <div class="mode-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+          <div class="mode-text"><span class="mode-title">Analyze Campaign</span><span class="mode-desc">Diagnose performance & get actions</span></div>
+        </button>
+        <button class="mode-btn" data-mode="generate">
+          <div class="mode-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+          <div class="mode-text"><span class="mode-title">Generate Ads</span><span class="mode-desc">Create high-converting ad copy</span></div>
+        </button>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- ANALYZE MODE                                       -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="mode-content active" id="content-analyze">
+
+        <!-- Quick Task Chips -->
+        <div class="quick-chips-bar">
+          <span class="quick-chips-label">Quick Tasks</span>
+          <div class="chips-row">
+            <button class="quick-chip" data-prompt="My CPL jumped 40% — why?" data-preload="Leads|Meta|Women 25-40 fitness UAE|200|Landing page with 3-step form, video testimonial above fold">🔴 CPL jumped 40%</button>
+            <button class="quick-chip" data-prompt="Write Meta ad copy" data-preload="Leads|Meta|Women 25-40 fitness|300|Single image, lifestyle photo, 3 variants">✍️ Write Meta ad copy</button>
+            <button class="quick-chip" data-prompt="Diagnose low CTR" data-preload="Traffic|Meta|Men 25-45 interested in tech|150|Carousel ad, product demos">📉 Diagnose low CTR</button>
+            <button class="quick-chip" data-prompt="Scale from $50 to $500/day" data-preload="Sales|Google|High-intent buyers UAE|50|Search ads, shopping feed">🚀 Scale $50→$500/day</button>
+            <button class="quick-chip" data-prompt="Improve lead quality" data-preload="Leads|Facebook|Women 30-45 wellness|250|Lead form, 5 questions">🎯 Improve lead quality</button>
+            <button class="quick-chip" data-prompt="Generate video ad script" data-preload="Awareness|TikTok|Gen Z 18-24|100|Short-form vertical video">📹 Video ad script</button>
+            <button class="quick-chip" data-prompt="Recommend A/B tests" data-preload="Leads|Meta|Mixed audience|200|A/B testing headlines">⚖️ Recommend A/B tests</button>
+            <button class="quick-chip" data-prompt="Analyze my funnel" data-preload="Leads|Meta|Women 25-40|300|3-step funnel: ad → LP → form">📊 Analyze my funnel</button>
+          </div>
+        </div>
+
+        <div class="command-grid">
+
+          <!-- Left: Input Panel -->
+          <div class="glass-card input-panel" id="input-panel">
+            <div class="panel-section">
+              <div class="section-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Campaign Setup
+              </div>
+              <form id="campaign-form" class="command-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Platform</label>
+                    <select id="campaign-platform" class="form-select">
+                      <option value="">Select…</option>
+                      <option value="Meta">Meta (Facebook / Instagram)</option>
+                      <option value="Google">Google Ads</option>
+                      <option value="TikTok">TikTok Ads</option>
+                      <option value="LinkedIn">LinkedIn Ads</option>
+                      <option value="YouTube">YouTube Ads</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Objective</label>
+                    <select id="campaign-objective" class="form-select">
+                      <option value="">Select…</option>
+                      <option value="Leads">Leads</option>
+                      <option value="Sales">Sales</option>
+                      <option value="Traffic">Traffic</option>
+                      <option value="Awareness">Awareness</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Target Audience</label>
+                  <input type="text" id="campaign-audience" class="form-input" placeholder="Women 25-40, fitness, UAE" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Daily Budget</label>
+                  <div class="budget-input-group">
+                    <input type="text" id="campaign-budget" class="form-input" placeholder="200" />
+                    <div class="currency-toggle">
+                      <button type="button" class="currency-btn active" data-currency="AED">AED</button>
+                      <button type="button" class="currency-btn" data-currency="USD">USD</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Creatives</label>
+                  <textarea id="campaign-creatives" class="form-textarea" rows="2" placeholder="Ad copy, images, videos, hooks…"></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Landing Page / Funnel</label>
+                  <textarea id="campaign-landing" class="form-textarea" rows="2" placeholder="Landing page URL or funnel steps…"></textarea>
+                </div>
+                <button type="button" class="btn btn-analyze" id="analyze-btn">
+                  <span class="btn-analyze-content"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Analyze Campaign</span>
+                  <span class="btn-analyze-loading" style="display:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin-icon"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>Analyzing…</span>
+                </button>
+              </form>
+            </div>
+            <div class="panel-divider"></div>
+            <div class="panel-section">
+              <div class="section-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Current Performance
+              </div>
+              <div class="metrics-grid">
+                <div class="metric-cell">
+                  <label class="form-label">CTR (%)</label>
+                  <input type="number" id="metric-ctr" class="form-input metric-input" step="0.01" min="0" max="100" placeholder="0.00" />
+                  <div class="metric-benchmark" id="bench-ctr"></div>
+                </div>
+                <div class="metric-cell">
+                  <label class="form-label">CPC</label>
+                  <input type="number" id="metric-cpc" class="form-input metric-input" step="0.01" min="0" placeholder="0.00" />
+                  <div class="metric-benchmark" id="bench-cpc"></div>
+                </div>
+                <div class="metric-cell">
+                  <label class="form-label">CPL</label>
+                  <input type="number" id="metric-cpl" class="form-input metric-input" step="0.01" min="0" placeholder="0.00" />
+                  <div class="metric-benchmark" id="bench-cpl"></div>
+                </div>
+                <div class="metric-cell">
+                  <label class="form-label">Conv. Rate (%)</label>
+                  <input type="number" id="metric-cvr" class="form-input metric-input" step="0.01" min="0" max="100" placeholder="0.00" />
+                  <div class="metric-benchmark" id="bench-cvr"></div>
+                </div>
+                <div class="metric-cell">
+                  <label class="form-label">ROAS</label>
+                  <input type="number" id="metric-roas" class="form-input metric-input" step="0.01" min="0" placeholder="0.00" />
+                  <div class="metric-benchmark" id="bench-roas"></div>
+                </div>
+              </div>
+              <!-- Campaign Health Score -->
+              <div class="health-score-container" id="health-score-container">
+                <div class="health-score-ring" id="health-ring">
+                  <svg viewBox="0 0 100 100"><circle class="health-bg" cx="50" cy="50" r="42"/><circle class="health-fill" id="health-fill" cx="50" cy="50" r="42"/></svg>
+                  <span class="health-value" id="health-value">—</span>
+                </div>
+                <div class="health-label">Pre-Analysis Health Score</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Output Panel -->
+          <div class="glass-card output-panel" id="output-panel">
+            <div class="output-header">
+              <div class="output-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                AI Analysis Report
+              </div>
+              <button class="btn btn-ghost btn-sm" id="new-analysis-btn" style="display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>New Analysis</button>
+            </div>
+            <div class="output-body" id="output-body">
+              <!-- Live AI Status Panel (always visible) -->
+              <div class="ai-status-panel" id="ai-status-panel">
+                <div class="orb-container" id="orb-container">
+                  <canvas id="orb-canvas" width="200" height="200"></canvas>
+                  <div class="floating-tags" id="floating-tags">
+                    <span class="float-tag" style="--delay:0s;--x:-60px;--y:-40px">Analyzing CTR patterns…</span>
+                    <span class="float-tag" style="--delay:1.5s;--x:50px;--y:-50px">Checking audience signals…</span>
+                    <span class="float-tag" style="--delay:3s;--x:-70px;--y:30px">Scanning creative fatigue…</span>
+                    <span class="float-tag" style="--delay:4.5s;--x:60px;--y:40px">Calculating CPL benchmarks…</span>
+                  </div>
+                </div>
+                <div class="benchmark-cards">
+                  <div class="bench-card"><span class="bench-icon">📊</span><div class="bench-info"><span class="bench-title">Avg Meta CPL (UAE)</span><span class="bench-value">AED 28–45</span></div></div>
+                  <div class="bench-card"><span class="bench-icon">📈</span><div class="bench-info"><span class="bench-title">Good CTR benchmark</span><span class="bench-value">1.5–3%</span></div></div>
+                  <div class="bench-card"><span class="bench-icon">🎯</span><div class="bench-info"><span class="bench-title">Target ROAS (leads)</span><span class="bench-value">3x+</span></div></div>
+                </div>
+              </div>
+
+              <!-- Report Output (hidden until analysis) -->
+              <div class="report-output" id="report-output" style="display:none"></div>
+
+              <!-- Loading State -->
+              <div class="loading-state" id="loading-state" style="display:none">
+                <div class="loading-bars"><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div></div>
+                <div class="loading-label">Analyzing campaign data…</div>
+              </div>
+            </div>
+
+            <!-- Follow-up Chat -->
+            <div class="followup-chat" id="followup-chat" style="display:none">
+              <div class="followup-messages" id="followup-messages"></div>
+              <div class="followup-input-bar">
+                <input type="text" id="followup-input" placeholder="Ask a follow-up question about your campaign…" autocomplete="off" />
+                <button class="followup-send-btn" id="followup-send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- GENERATE ADS MODE                                 -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="mode-content" id="content-generate">
+        <div class="command-grid">
+          <div class="glass-card input-panel">
+            <div class="panel-section">
+              <div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Ad Copy Generator</div>
+              <form id="adgen-form" class="command-form">
+                <div class="form-group"><label class="form-label">Product / Service</label><input type="text" id="adgen-product" class="form-input" placeholder="Online fitness coaching for women" /></div>
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label">Platform</label><select id="adgen-platform" class="form-select"><option value="">Select…</option><option value="Meta">Meta</option><option value="Google">Google</option><option value="TikTok">TikTok</option><option value="LinkedIn">LinkedIn</option></select></div>
+                  <div class="form-group"><label class="form-label">Tone</label><select id="adgen-tone" class="form-select"><option value="Professional">Professional</option><option value="Casual">Casual</option><option value="Urgent">Urgent</option><option value="Emotional">Emotional</option></select></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label">Target Audience</label><input type="text" id="adgen-audience" class="form-input" placeholder="Women 25-40, fitness" /></div>
+                  <div class="form-group"><label class="form-label">Format</label><select id="adgen-format" class="form-select"><option value="Single image">Single Image</option><option value="Carousel">Carousel</option><option value="Video script">Video Script</option><option value="Search ad">Search Ad</option><option value="Story ad">Story Ad</option></select></div>
+                </div>
+                <button type="button" class="btn btn-analyze" id="generate-btn"><span class="btn-analyze-content"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Generate Ad Copy</span><span class="btn-analyze-loading" style="display:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin-icon"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>Generating…</span></button>
+              </form>
+            </div>
+          </div>
+
+          <div class="glass-card output-panel" id="adgen-output-panel">
+            <div class="output-header"><div class="output-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Generated Ad Previews</div></div>
+            <div class="output-body" id="adgen-output-body">
+              <div class="empty-state" id="adgen-empty-state"><div class="empty-icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><h3>No Ads Generated</h3><p>Fill in your product details and click <strong>Generate Ad Copy</strong> to get live ad previews.</p></div>
+              <div class="loading-state" id="adgen-loading-state" style="display:none"><div class="loading-bars"><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div><div class="loading-bar"></div></div><div class="loading-label">Generating ad variations…</div></div>
+              <div class="ad-previews" id="adgen-previews" style="display:none"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Chatbot Widget -->
+<div id="chat-widget" class="chat-widget" data-page-context="Marketing Agent">
+  <button class="chat-toggle" id="chat-toggle" aria-label="Toggle AI Assistant"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="12" cy="10" r="1"/></svg></button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header"><div class="chat-header-info"><div class="chat-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg></div><div><div class="chat-header-title">AI Marketing Assistant</div><div class="chat-header-status" id="chat-config-status"><span class="chat-status-dot"></span>No key set</div></div></div><div class="chat-header-actions"><button class="chat-clear-btn" id="chat-config-btn" title="Configure API key"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><button class="chat-clear-btn" id="chat-clear" title="Clear conversation"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button><button class="chat-close-btn" id="chat-close">✕</button></div></div>
+    <div class="chat-config" id="chat-config"><div class="chat-config-row"><input type="password" id="config-key" class="chat-config-input" placeholder="Paste your Gemini API key..." autocomplete="off" style="flex:1" /><button class="chat-config-save" id="config-save">Save</button></div><div class="chat-config-hint">Get a free key at aistudio.google.com</div></div>
+    <div class="chat-messages" id="chat-messages"><div class="chat-msg bot"><div class="msg-avatar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg></div><div class="msg-content"><div class="msg-text">Hi! I'm your marketing AI. Ask me about SEO, analytics, or the audit results on this page.</div></div></div></div>
+    <div class="chat-suggestions" id="chat-suggestions"><div class="suggestion-chip">How do I improve my SEO score?</div><div class="suggestion-chip">Explain Google Analytics bounce rate</div><div class="suggestion-chip">What is LCP in Core Web Vitals?</div><div class="suggestion-chip">Tips for social media</div></div>
+    <div class="chat-input-bar"><input type="text" id="chat-input" placeholder="Ask about marketing, SEO, or data..." autocomplete="off" /><button class="chat-send-btn" id="chat-send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/chatbot.js"></script>
+<script src="js/marketing-agent.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>

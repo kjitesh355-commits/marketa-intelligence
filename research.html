@@ -1,0 +1,924 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Library — MARKETA Intelligence</title>
+  <meta name="description" content="Upload, view, and ask questions about marketing research PDFs." />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    .research-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr 380px;
+      height: calc(100vh - 60px);
+      gap: 0;
+      overflow: hidden;
+    }
+
+    /* Left Panel - Files */
+    .research-files-panel {
+      border-right: 1px solid var(--glass-border);
+      display: flex;
+      flex-direction: column;
+      background: rgba(0,0,0,0.2);
+    }
+    .files-header {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .files-header h3 {
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+      color: var(--text-primary);
+    }
+    .upload-btn {
+      width: 100%;
+      padding: 10px;
+      border: 2px dashed var(--glass-border);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.8125rem;
+    }
+    .upload-btn:hover {
+      border-color: var(--indigo);
+      color: var(--indigo-light);
+      background: rgba(99,102,241,0.05);
+    }
+    .files-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-3);
+    }
+    .file-card {
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid transparent;
+    }
+    .file-card:hover { background: rgba(255,255,255,0.04); }
+    .file-card.active {
+      background: rgba(99,102,241,0.12);
+      border-color: rgba(99,102,241,0.3);
+    }
+    .file-card-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(239,68,68,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .file-card-icon svg { width: 16px; height: 16px; stroke: #ef4444; }
+    .file-card-info { flex: 1; min-width: 0; }
+    .file-card-name {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .file-card-meta { font-size: 0.6875rem; color: var(--text-muted); margin-top: 2px; }
+    .file-card-delete {
+      opacity: 0;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.15s;
+    }
+    .file-card:hover .file-card-delete { opacity: 1; }
+    .file-card-delete:hover { color: #ef4444; background: rgba(239,68,68,0.1); }
+
+    /* Middle Panel - PDF Viewer */
+    .research-viewer-panel {
+      display: flex;
+      flex-direction: column;
+      background: rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    .viewer-toolbar {
+      padding: 10px var(--space-4);
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      background: rgba(0,0,0,0.2);
+    }
+    .viewer-filename {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .viewer-pages {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .viewer-page-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .viewer-page-btn:hover:not(:disabled) { border-color: var(--indigo); color: var(--indigo-light); }
+    .viewer-page-btn:disabled { opacity: 0.3; cursor: default; }
+    .viewer-page-info { font-size: 0.8125rem; color: var(--text-secondary); min-width: 60px; text-align: center; }
+    .viewer-ai-btn {
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: none;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .viewer-ai-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99,102,241,0.3); }
+    .viewer-container {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: var(--space-4);
+      scroll-behavior: smooth;
+      background: rgba(0,0,0,0.4);
+    }
+    .pdf-page-wrapper {
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      max-width: 100%;
+    }
+    .pdf-page-wrapper.slide-left {
+      animation: slideLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .pdf-page-wrapper.slide-right {
+      animation: slideRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes slideLeft {
+      0% { transform: translateX(100px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideRight {
+      0% { transform: translateX(-100px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+    .pdf-page-wrapper canvas {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      border-radius: 4px;
+    }
+    .viewer-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--text-muted);
+      gap: var(--space-3);
+    }
+    .viewer-empty svg { opacity: 0.2; }
+
+    /* Right Panel - Chat */
+    .research-chat-panel {
+      border-left: 1px solid var(--glass-border);
+      display: flex;
+      flex-direction: column;
+      background: rgba(0,0,0,0.2);
+      height: 100%;
+      overflow: hidden;
+    }
+    .chat-panel-header {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-panel-header h3 {
+      font-size: 0.875rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chat-panel-header .gemini-badge {
+      font-size: 0.625rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(99,102,241,0.15);
+      color: var(--indigo-light);
+      font-weight: 600;
+    }
+    .chat-api-key-row {
+      padding: 10px var(--space-4);
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      gap: 6px;
+    }
+    .chat-api-key-row input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-primary);
+      font-size: 0.75rem;
+      font-family: monospace;
+    }
+    .chat-api-key-row input:focus { outline: none; border-color: var(--indigo); }
+    .chat-api-key-row button {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      background: var(--indigo);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto !important;
+      overflow-x: hidden;
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      min-height: 0;
+      max-height: 100%;
+    }
+    .chat-msg {
+      display: flex;
+      gap: 8px;
+      max-width: 95%;
+    }
+    .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .chat-msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.6875rem;
+      font-weight: 700;
+    }
+    .chat-msg.bot .chat-msg-avatar { background: rgba(99,102,241,0.15); color: var(--indigo-light); }
+    .chat-msg.user .chat-msg-avatar { background: rgba(16,185,129,0.15); color: #10b981; }
+    .chat-msg-bubble {
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+    .chat-msg.bot .chat-msg-bubble { background: var(--glass-bg); border: 1px solid var(--glass-border); }
+    .chat-msg.user .chat-msg-bubble { background: var(--indigo); color: #fff; }
+    .chat-msg-bubble strong { font-weight: 700; }
+    .chat-msg-bubble code {
+      background: rgba(255,255,255,0.08);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 0.75rem;
+    }
+    .chat-suggestions {
+      padding: 0 var(--space-4) var(--space-3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chat-suggestion {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--glass-border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.6875rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chat-suggestion:hover { border-color: var(--indigo); color: var(--indigo-light); }
+    .chat-input-row {
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      gap: 8px;
+    }
+    .chat-input-row input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-primary);
+      font-size: 0.8125rem;
+    }
+    .chat-input-row input:focus { outline: none; border-color: var(--indigo); }
+    .chat-input-row button {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: none;
+      background: var(--indigo);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .chat-input-row button:hover { background: #5558e6; }
+    .chat-input-row button:disabled { opacity: 0.5; cursor: default; }
+    .chat-typing { display: flex; gap: 4px; padding: 4px 0; }
+    .chat-typing span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--text-muted);
+      animation: typingBounce 1.2s infinite;
+    }
+    .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    /* Empty state */
+    .files-empty {
+      text-align: center;
+      padding: var(--space-6) var(--space-3);
+      color: var(--text-muted);
+      font-size: 0.8125rem;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+    /* Hide old chatbot widget */
+    .chat-widget { display: none !important; }
+  </style>
+</head>
+<body>
+<div class="bg-perspective-grid"></div>
+<div class="bg-ambient-glow"></div>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+
+<div class="app-shell">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div class="logo-text">MARKETA<span>AI</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+      <a href="analytics.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Analytics</a>
+      <a href="social.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Social Checker</a>
+      <a href="automation.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>Automation</a>
+      <a href="audiences.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Audiences</a>
+      <a href="seo.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>SEO Checker</a>
+      <div class="nav-section-label">Research</div>
+      <a href="research.html" class="nav-link active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Research Library</a>
+      <a href="keyword-research.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>Keyword Research<span class="nav-badge" style="background:var(--amber);color:#000">NEW</span></a>
+      <a href="marketing-agent.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>AI Agent<span class="nav-badge" style="background:var(--cyan);color:#000">NEW</span></a>
+      <a href="integrations.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Integrations</a>
+  </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar-placeholder sm" id="sidebar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Set your name</div>
+          <div class="sidebar-user-role">Click to set up profile</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title">Research Library</div>
+        <div class="topbar-subtitle" id="greeting-text"></div>
+      </div>
+      <div class="topbar-clock" id="topbar-clock"></div>
+      <div class="topbar-actions">
+        <button class="notif-btn" onclick="showToast('3 notifications','info')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar-placeholder sm" id="topbar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+      </div>
+    </header>
+
+    <!-- Three-Column Research Layout -->
+    <div class="research-layout">
+
+      <!-- LEFT: Files Panel -->
+      <div class="research-files-panel">
+        <div class="files-header">
+          <h3>Documents</h3>
+          <button class="upload-btn" id="upload-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload PDF
+          </button>
+          <input type="file" id="file-input" accept=".pdf,application/pdf" multiple style="display:none" />
+        </div>
+        <div class="files-list" id="files-list">
+          <div class="files-empty" id="files-empty">No documents yet.<br/>Upload a PDF to get started.</div>
+        </div>
+      </div>
+
+      <!-- MIDDLE: PDF Viewer -->
+      <div class="research-viewer-panel">
+        <div class="viewer-toolbar" id="viewer-toolbar" style="display:none">
+          <div class="viewer-filename" id="viewer-filename">document.pdf</div>
+          <div class="viewer-pages">
+            <button class="viewer-page-btn" id="prev-page" disabled>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <span class="viewer-page-info" id="page-info">1 / 1</span>
+            <button class="viewer-page-btn" id="next-page" disabled>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <button class="viewer-ai-btn" id="summarize-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+            AI Summary
+          </button>
+        </div>
+        <div class="viewer-container" id="viewer-container">
+          <div class="viewer-empty" id="viewer-empty">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <div>Select a document to view</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Chat Panel -->
+      <div class="research-chat-panel">
+        <div class="chat-panel-header">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Research Chat
+            <span class="gemini-badge">Gemini 2.5 Flash</span>
+          </h3>
+        </div>
+        <div class="chat-api-key-row">
+          <input type="password" id="chat-api-key" placeholder="Paste Gemini API key..." autocomplete="off" />
+          <button id="save-api-key">Save</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-msg bot">
+            <div class="chat-msg-avatar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg></div>
+            <div class="chat-msg-bubble">Select a document and ask me anything about it. I'll answer based on its content.</div>
+          </div>
+        </div>
+        <div class="chat-suggestions" id="chat-suggestions">
+          <button class="chat-suggestion">Summarize this document</button>
+          <button class="chat-suggestion">What are the key findings?</button>
+          <button class="chat-suggestion">Explain the methodology</button>
+          <button class="chat-suggestion">What are the limitations?</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chat-input" placeholder="Ask about this document..." autocomplete="off" />
+          <button id="chat-send">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize PDF.js
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  // Elements
+  const uploadBtn = document.getElementById('upload-btn');
+  const fileInput = document.getElementById('file-input');
+  const filesList = document.getElementById('files-list');
+  const filesEmpty = document.getElementById('files-empty');
+  const viewerToolbar = document.getElementById('viewer-toolbar');
+  const viewerFilename = document.getElementById('viewer-filename');
+  const viewerContainer = document.getElementById('viewer-container');
+  const viewerEmpty = document.getElementById('viewer-empty');
+  const prevPage = document.getElementById('prev-page');
+  const nextPage = document.getElementById('next-page');
+  const pageInfo = document.getElementById('page-info');
+  const summarizeBtn = document.getElementById('summarize-btn');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSend = document.getElementById('chat-send');
+  const chatSuggestions = document.getElementById('chat-suggestions');
+  const apiKeyInput = document.getElementById('chat-api-key');
+  const saveApiKey = document.getElementById('save-api-key');
+
+  let files = [];
+  let currentFileId = null;
+  let currentPdf = null;
+  let currentPage = 1;
+  let totalPages = 0;
+  let apiKey = localStorage.getItem('research_gemini_key') || '';
+  let chatHistory = [];
+
+  // Init API key
+  if (apiKey) apiKeyInput.value = apiKey;
+
+  saveApiKey.addEventListener('click', () => {
+    apiKey = apiKeyInput.value.trim();
+    localStorage.setItem('research_gemini_key', apiKey);
+    showToast(apiKey ? 'API key saved!' : 'API key cleared', apiKey ? 'success' : 'info');
+  });
+
+  // Upload
+  uploadBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => {
+    Array.from(fileInput.files).forEach(f => uploadFile(f));
+    fileInput.value = '';
+  });
+
+  async function uploadFile(file) {
+    if (!file.name.toLowerCase().endsWith('.pdf')) { showToast('Only PDF files accepted', 'error'); return; }
+    if (file.size > 15 * 1024 * 1024) { showToast('File exceeds 15 MB limit', 'error'); return; }
+
+    showToast(`Uploading ${file.name}...`, 'info');
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const base64 = e.target.result.split(',')[1];
+      try {
+        const res = await fetch('/api/research/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: file.name, size: file.size, data: base64 })
+        });
+        const data = await res.json();
+        if (data.error) { showToast(data.error, 'error'); return; }
+        showToast('File uploaded!', 'success');
+        loadFiles();
+      } catch { showToast('Upload failed', 'error'); }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function loadFiles() {
+    try {
+      const res = await fetch('/api/research/files');
+      const data = await res.json();
+      files = data.files || [];
+      renderFiles();
+    } catch { }
+  }
+
+  function renderFiles() {
+    if (files.length === 0) {
+      filesEmpty.style.display = 'block';
+      filesList.querySelectorAll('.file-card').forEach(c => c.remove());
+      return;
+    }
+    filesEmpty.style.display = 'none';
+    const existing = filesList.querySelectorAll('.file-card');
+    existing.forEach(c => c.remove());
+
+    files.forEach(f => {
+      const card = document.createElement('div');
+      card.className = 'file-card' + (f.id === currentFileId ? ' active' : '');
+      const date = new Date(f.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const size = f.size < 1048576 ? (f.size/1024).toFixed(0) + ' KB' : (f.size/1048576).toFixed(1) + ' MB';
+      card.innerHTML = `
+        <div class="file-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <div class="file-card-info">
+          <div class="file-card-name">${escapeHtml(f.name)}</div>
+          <div class="file-card-meta">${date} · ${size}</div>
+        </div>
+        <button class="file-card-delete" data-id="${f.id}" title="Delete">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      `;
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.file-card-delete')) return;
+        selectFile(f.id);
+      });
+      card.querySelector('.file-card-delete').addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (!confirm('Delete this file?')) return;
+        await fetch(`/api/research/files/${f.id}`, { method: 'DELETE' });
+        if (currentFileId === f.id) { currentFileId = null; currentPdf = null; viewerContainer.innerHTML = ''; viewerToolbar.style.display = 'none'; viewerEmpty.style.display = 'flex'; }
+        loadFiles();
+      });
+      filesList.appendChild(card);
+    });
+  }
+
+  async function selectFile(fileId) {
+    currentFileId = fileId;
+    currentPage = 1;
+    chatHistory = [];
+    renderFiles();
+
+    const file = files.find(f => f.id === fileId);
+    if (file) {
+      viewerFilename.textContent = file.name;
+      viewerToolbar.style.display = 'flex';
+      viewerEmpty.style.display = 'none';
+
+      // Load PDF from base64 stored on server
+      try {
+        const res = await fetch(`/api/research/file-data/${fileId}`);
+        const data = await res.json();
+        if (data.data) {
+          const bytes = Uint8Array.from(atob(data.data), c => c.charCodeAt(0));
+          currentPdf = await pdfjsLib.getDocument({ data: bytes }).promise;
+          totalPages = currentPdf.numPages;
+          renderPage(1, 'none');
+        }
+      } catch (err) {
+        console.error('Failed to load PDF:', err);
+        showToast('Failed to load PDF', 'error');
+      }
+
+      // Reset chat
+      chatMessages.innerHTML = `<div class="chat-msg bot">
+        <div class="chat-msg-avatar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg></div>
+        <div class="chat-msg-bubble">I've loaded <strong>${escapeHtml(file.name)}</strong>. Ask me anything about this document!</div>
+      </div>`;
+      chatSuggestions.style.display = 'flex';
+    }
+  }
+
+  async function renderPage(pageNum, direction) {
+    if (!currentPdf || pageNum < 1 || pageNum > totalPages) return;
+
+    const page = await currentPdf.getPage(pageNum);
+    const unscaledViewport = page.getViewport({ scale: 1 });
+
+    // Calculate scale to fit container width
+    const containerWidth = viewerContainer.clientWidth - 48;
+    const containerHeight = viewerContainer.clientHeight - 48;
+    const scaleWidth = containerWidth / unscaledViewport.width;
+    const scaleHeight = containerHeight / unscaledViewport.height;
+    const scale = Math.min(scaleWidth, scaleHeight, 1.2);
+
+    const viewport = page.getViewport({ scale });
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pdf-page-wrapper' + (direction !== 'none' ? ' slide-' + direction : '');
+
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    canvas.style.maxWidth = '100%';
+    canvas.style.height = 'auto';
+    const ctx = canvas.getContext('2d');
+    await page.render({ canvasContext: ctx, viewport }).promise;
+
+    wrapper.appendChild(canvas);
+    viewerContainer.innerHTML = '';
+    viewerContainer.appendChild(wrapper);
+
+    currentPage = pageNum;
+    pageInfo.textContent = `${currentPage} / ${totalPages}`;
+    prevPage.disabled = currentPage <= 1;
+    nextPage.disabled = currentPage >= totalPages;
+  }
+
+  prevPage.addEventListener('click', () => { if (currentPage > 1) renderPage(currentPage - 1, 'right'); });
+  nextPage.addEventListener('click', () => { if (currentPage < totalPages) renderPage(currentPage + 1, 'left'); });
+
+  // Keyboard nav
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowLeft' && currentPage > 1) renderPage(currentPage - 1, 'right');
+    if (e.key === 'ArrowRight' && currentPage < totalPages) renderPage(currentPage + 1, 'left');
+  });
+
+  // AI Summary
+  summarizeBtn.addEventListener('click', async () => {
+    if (!currentFileId) return;
+    if (!apiKey) { showToast('Set your Gemini API key first', 'error'); apiKeyInput.focus(); return; }
+
+    summarizeBtn.disabled = true;
+    summarizeBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Summarizing...`;
+
+    try {
+      const res = await fetch('/api/research/summarize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileId: currentFileId, apiKey })
+      });
+      const data = await res.json();
+      if (data.error) { showToast(data.error, 'error'); return; }
+
+      // Add summary to chat
+      appendChat('bot', data.summary);
+    } catch { showToast('Failed to generate summary', 'error'); }
+    finally {
+      summarizeBtn.disabled = false;
+      summarizeBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg> AI Summary`;
+    }
+  });
+
+  // Chat
+  chatSend.addEventListener('click', sendChat);
+  chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+  chatSuggestions.addEventListener('click', e => {
+    const btn = e.target.closest('.chat-suggestion');
+    if (btn) { chatInput.value = btn.textContent; sendChat(); }
+  });
+
+  async function sendChat() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    if (!currentFileId) { showToast('Select a document first', 'error'); return; }
+    if (!apiKey) { showToast('Set your Gemini API key first', 'error'); apiKeyInput.focus(); return; }
+
+    chatInput.value = '';
+    appendChat('user', text);
+    chatSuggestions.style.display = 'none';
+
+    // Show typing
+    const typing = document.createElement('div');
+    typing.className = 'chat-msg bot';
+    typing.id = 'chat-typing';
+    typing.innerHTML = `<div class="chat-msg-avatar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg></div><div class="chat-msg-bubble"><div class="chat-typing"><span></span><span></span><span></span></div></div>`;
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    chatSend.disabled = true;
+
+    try {
+      const res = await fetch('/api/research/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileId: currentFileId, question: text, apiKey })
+      });
+      const data = await res.json();
+      const typingEl = document.getElementById('chat-typing');
+      if (typingEl) typingEl.remove();
+
+      if (data.error) { appendChat('bot', 'Error: ' + data.error); return; }
+      appendChat('bot', data.answer);
+    } catch {
+      const typingEl = document.getElementById('chat-typing');
+      if (typingEl) typingEl.remove();
+      appendChat('bot', 'Network error. Please try again.');
+    } finally { chatSend.disabled = false; }
+  }
+
+  function appendChat(role, text) {
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + role;
+    const avatar = role === 'bot'
+      ? '<div class="chat-msg-avatar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg></div>'
+      : '<div class="chat-msg-avatar">U</div>';
+    const formatted = role === 'bot' ? renderMd(text) : escapeHtml(text);
+    div.innerHTML = `${avatar}<div class="chat-msg-bubble">${formatted}</div>`;
+    chatMessages.appendChild(div);
+    // Scroll to bottom multiple times to ensure it works
+    const scrollBottom = () => { chatMessages.scrollTop = chatMessages.scrollHeight; };
+    scrollBottom();
+    setTimeout(scrollBottom, 50);
+    setTimeout(scrollBottom, 150);
+    setTimeout(scrollBottom, 300);
+  }
+
+  function renderMd(text) {
+    let html = escapeHtml(text);
+    html = html.replace(/^### (.+)$/gm, '<h4 style="margin:8px 0 4px;font-size:0.875rem">$1</h4>');
+    html = html.replace(/^## (.+)$/gm, '<h3 style="margin:10px 0 6px;font-size:0.9375rem">$1</h3>');
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    html = html.replace(/^[-*]\s+(.+)$/gm, '• $1');
+    html = html.replace(/\n/g, '<br>');
+    return html;
+  }
+
+  function escapeHtml(text) {
+    const d = document.createElement('div');
+    d.textContent = text;
+    return d.innerHTML;
+  }
+
+  // Load files on start
+  loadFiles();
+});
+</script>
+
+<!-- Animation Libraries (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<!-- Animation Scripts -->
+<script src="js/animations/scroll-reveal.js"></script>
+<script src="js/animations/research-tilt.js"></script>
+<script src="js/animations/gradient-border.js"></script>
+<script src="js/chatbot.js"></script>
+
+<!-- ── AI Marketing Chatbot Widget ─────────────────────────── -->
+<div id="chat-widget" class="chat-widget" data-page-context="research">
+  <button class="chat-toggle" id="chat-toggle" aria-label="Toggle AI Assistant">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="12" cy="10" r="1"/></svg>
+  </button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-header-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div>
+          <div class="chat-header-title">AI Marketing Assistant</div>
+          <div class="chat-header-status" id="chat-config-status">
+            <span class="chat-status-dot"></span>
+            No key set
+          </div>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-clear-btn" id="chat-config-btn" aria-label="API key settings" title="Configure API key">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <button class="chat-clear-btn" id="chat-clear" aria-label="Clear conversation" title="Clear conversation">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+        <button class="chat-close-btn" id="chat-close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="chat-config" id="chat-config">
+      <div class="chat-config-row">
+        <input type="password" id="config-key" class="chat-config-input" placeholder="Paste your Gemini API key..." autocomplete="off" style="flex:1" />
+        <button class="chat-config-save" id="config-save">Save</button>
+      </div>
+      <div class="chat-config-hint">Get a free key at aistudio.google.com — Only Gemini 2.5 Flash is used.</div>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg bot">
+        <div class="msg-avatar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div class="msg-content">
+          <div class="msg-text">Hi! I'm your marketing AI. Ask me about SEO, analytics, or the audit results on this page.</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-suggestions" id="chat-suggestions">
+      <div class="suggestion-chip">How do I improve my SEO score?</div>
+      <div class="suggestion-chip">Explain Google Analytics bounce rate</div>
+      <div class="suggestion-chip">What is LCP in Core Web Vitals?</div>
+      <div class="suggestion-chip">Tips for social media</div>
+    </div>
+    <div class="chat-input-bar">
+      <input type="text" id="chat-input" placeholder="Ask about marketing, SEO, or data..." autocomplete="off" />
+      <button class="chat-send-btn" id="chat-send" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="js/profile.js"></script>
+</body>
+</body>
+</html>
