@@ -287,6 +287,15 @@
       margin: 0 auto var(--space-4);
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .shimmer {
+      background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      border-radius: 4px;
+      color: transparent !important;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .check-btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .loading-text { color: var(--text-secondary); font-size: 0.9375rem; }
 
     /* Error */
@@ -887,7 +896,7 @@ function generateInsights(platform, username) {
 }
 
 // Analyze URL function
-function analyzeUrl() {
+async function analyzeUrl() {
   const url = document.getElementById('social-url-input').value.trim();
   if (!url) {
     showToast('Please enter a social media URL', 'error');
@@ -895,88 +904,88 @@ function analyzeUrl() {
   }
 
   const platform = detectPlatform(url);
-  if (platform.id === 'username') {
+  if (platform.id === 'unknown') {
     showToast('Could not detect platform. Please use a valid social media URL.', 'error');
     return;
   }
 
-  // Extract username from URL
-  let username = 'user';
-  if (url.includes('/@')) username = url.split('/@')[1].split('/')[0].split('?')[0];
-  else if (url.includes('/channel/')) username = url.split('/channel/')[1].split('/')[0];
-  else if (url.includes('/user/')) username = url.split('/user/')[1].split('/')[0];
-  else if (url.includes('/company/')) username = url.split('/company/')[1].split('/')[0];
-  else if (url.includes('/in/')) username = url.split('/in/')[1].split('/')[0];
-  else if (url.includes('facebook.com/')) username = url.split('facebook.com/')[1].split('/')[0];
-  else if (url.includes('x.com/') || url.includes('twitter.com/')) username = url.split(/x\.com|twitter\.com/)[1].split('/')[1]?.split('?')[0] || 'user';
-
-  // Show results
+  // Show loading state
   const resultsDiv = document.getElementById('analysis-results');
-  const platformIcon = document.getElementById('result-platform-icon');
-  const platformName = document.getElementById('result-platform-name');
-  const profileUrl = document.getElementById('result-profile-url');
+  const analyzeBtn = document.getElementById('analyze-btn');
+  const originalBtnHTML = analyzeBtn.innerHTML;
+  analyzeBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-2px;margin-right:4px;animation:spin 1s linear infinite"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg> Analyzing...';
+  analyzeBtn.disabled = true;
+
+  // Show results div with loading skeleton
   const statsDiv = document.getElementById('result-stats');
   const insightsText = document.getElementById('result-insights-text');
 
-  platformIcon.innerHTML = platform.icon;
-  platformIcon.style.background = platform.bg;
-  platformName.textContent = platform.name;
-  platformName.style.color = platform.color;
-  profileUrl.textContent = url;
+  document.getElementById('result-platform-icon').innerHTML = platform.icon;
+  document.getElementById('result-platform-icon').style.background = platform.bg;
+  document.getElementById('result-platform-name').textContent = platform.name;
+  document.getElementById('result-platform-name').style.color = platform.color;
+  document.getElementById('result-profile-url').textContent = url;
 
-  // Generate stats based on platform
-  const stats = {
-    youtube: [
-      { value: '0', label: 'Subscribers' },
-      { value: '0', label: 'Total Views' },
-      { value: '0', label: 'Videos' },
-      { value: '0%', label: 'Engagement' }
-    ],
-    instagram: [
-      { value: '0', label: 'Followers' },
-      { value: '0', label: 'Posts' },
-      { value: '0%', label: 'Engagement' },
-      { value: '0', label: 'Avg. Likes' }
-    ],
-    tiktok: [
-      { value: '0', label: 'Followers' },
-      { value: '0', label: 'Likes' },
-      { value: '0', label: 'Videos' },
-      { value: '0%', label: 'Engagement' }
-    ],
-    twitter: [
-      { value: '0', label: 'Followers' },
-      { value: '0', label: 'Posts' },
-      { value: '0%', label: 'Engagement' },
-      { value: '0', label: 'Avg. Likes' }
-    ],
-    linkedin: [
-      { value: '0', label: 'Followers' },
-      { value: '0', label: 'Posts' },
-      { value: '0%', label: 'Engagement' },
-      { value: '0', label: 'Avg. Likes' }
-    ],
-    facebook: [
-      { value: '0', label: 'Followers' },
-      { value: '0', label: 'Posts' },
-      { value: '0%', label: 'Engagement' },
-      { value: '0', label: 'Avg. Likes' }
-    ]
-  };
-
-  const platformStats = stats[platform.id] || stats.youtube;
-  statsDiv.innerHTML = platformStats.map(stat => `
-    <div class="platform-stat">
-      <div class="platform-stat-value" style="color:${platform.color}">${stat.value}</div>
-      <div class="platform-stat-label">${stat.label}</div>
-    </div>
-  `).join('');
-
-  insightsText.textContent = generateInsights(platform.id, username);
+  statsDiv.innerHTML = `
+    <div class="platform-stat"><div class="platform-stat-value shimmer">—</div><div class="platform-stat-label">Loading...</div></div>
+    <div class="platform-stat"><div class="platform-stat-value shimmer">—</div><div class="platform-stat-label">Loading...</div></div>
+    <div class="platform-stat"><div class="platform-stat-value shimmer">—</div><div class="platform-stat-label">Loading...</div></div>
+    <div class="platform-stat"><div class="platform-stat-value shimmer">—</div><div class="platform-stat-label">Loading...</div></div>
+  `;
+  insightsText.textContent = 'Analyzing profile...';
   resultsDiv.style.display = 'block';
-
-  // Scroll to results
   resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const response = await fetch('/api/social-analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, platformId: platform.id })
+    });
+
+    if (!response.ok) throw new Error('API request failed');
+    const data = await response.json();
+
+    // Populate stats
+    statsDiv.innerHTML = data.stats.map(stat => `
+      <div class="platform-stat">
+        <div class="platform-stat-value" style="color:${platform.color}">${stat.value}</div>
+        <div class="platform-stat-label">${stat.label}</div>
+      </div>
+    `).join('');
+
+    insightsText.textContent = data.insights;
+  } catch (err) {
+    console.error('Social analysis error:', err);
+    // Fallback to local insights
+    const localInsights = generateInsights(platform.id, extractUsername(url));
+    statsDiv.innerHTML = [
+      { value: '0', label: 'Followers' },
+      { value: '0', label: 'Posts' },
+      { value: '0%', label: 'Engagement' },
+      { value: '0', label: 'Avg. Likes' }
+    ].map(s => `
+      <div class="platform-stat">
+        <div class="platform-stat-value" style="color:${platform.color}">${s.value}</div>
+        <div class="platform-stat-label">${s.label}</div>
+      </div>
+    `).join('');
+    insightsText.textContent = localInsights + '\n\n⚠️ Connect a Gemini API key for live analysis.';
+  } finally {
+    analyzeBtn.innerHTML = originalBtnHTML;
+    analyzeBtn.disabled = false;
+  }
+}
+
+function extractUsername(url) {
+  if (url.includes('/@')) return url.split('/@')[1].split('/')[0].split('?')[0];
+  if (url.includes('/channel/')) return url.split('/channel/')[1].split('/')[0];
+  if (url.includes('/user/')) return url.split('/user/')[1].split('/')[0];
+  if (url.includes('/company/')) return url.split('/company/')[1].split('/')[0];
+  if (url.includes('/in/')) return url.split('/in/')[1].split('/')[0];
+  if (url.includes('facebook.com/')) return url.split('facebook.com/')[1].split('/')[0];
+  if (url.includes('x.com/') || url.includes('twitter.com/')) return url.split(/x\.com|twitter\.com/)[1].split('/')[1]?.split('?')[0] || 'user';
+  return 'user';
 }
 
 // Close analysis

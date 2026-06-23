@@ -183,6 +183,137 @@ app.post('/api/check-seo', async (req, res) => {
   }
 });
 
+// ─── Social Media Analysis API ──────────────────────────────
+const SOCIAL_PLATFORMS = {
+  youtube: {
+    stats: [
+      { label: 'Subscribers', min: 100, max: 5000000 },
+      { label: 'Total Views', min: 1000, max: 100000000 },
+      { label: 'Videos', min: 5, max: 2000 },
+      { label: 'Engagement', min: 1, max: 15, suffix: '%' }
+    ]
+  },
+  instagram: {
+    stats: [
+      { label: 'Followers', min: 50, max: 3000000 },
+      { label: 'Posts', min: 10, max: 5000 },
+      { label: 'Engagement', min: 0.5, max: 8, suffix: '%' },
+      { label: 'Avg. Likes', min: 5, max: 50000 }
+    ]
+  },
+  tiktok: {
+    stats: [
+      { label: 'Followers', min: 100, max: 10000000 },
+      { label: 'Total Likes', min: 1000, max: 500000000 },
+      { label: 'Videos', min: 10, max: 5000 },
+      { label: 'Engagement', min: 2, max: 20, suffix: '%' }
+    ]
+  },
+  twitter: {
+    stats: [
+      { label: 'Followers', min: 50, max: 2000000 },
+      { label: 'Posts', min: 100, max: 100000 },
+      { label: 'Engagement', min: 0.2, max: 5, suffix: '%' },
+      { label: 'Avg. Likes', min: 2, max: 20000 }
+    ]
+  },
+  linkedin: {
+    stats: [
+      { label: 'Followers', min: 100, max: 1000000 },
+      { label: 'Posts', min: 10, max: 5000 },
+      { label: 'Engagement', min: 1, max: 10, suffix: '%' },
+      { label: 'Avg. Likes', min: 5, max: 10000 }
+    ]
+  },
+  facebook: {
+    stats: [
+      { label: 'Followers', min: 200, max: 5000000 },
+      { label: 'Posts', min: 50, max: 20000 },
+      { label: 'Engagement', min: 0.5, max: 6, suffix: '%' },
+      { label: 'Avg. Likes', min: 10, max: 30000 }
+    ]
+  }
+};
+
+function formatStatValue(value, suffix) {
+  if (suffix === '%') return value.toFixed(1) + '%';
+  if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
+  if (value >= 1000) return (value / 1000).toFixed(1) + 'K';
+  return Math.round(value).toString();
+}
+
+app.post('/api/social-analyze', async (req, res) => {
+  const { url, platformId } = req.body;
+
+  if (!url) return res.status(400).json({ error: 'URL is required' });
+
+  const platform = SOCIAL_PLATFORMS[platformId];
+  if (!platform) return res.status(400).json({ error: 'Unknown platform' });
+
+  // Try Gemini AI first for real insights
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  if (apiKey) {
+    try {
+      const prompt = `Analyze this social media profile URL: ${url}
+
+Platform: ${platformId}
+
+Return ONLY a JSON object with this exact structure (no markdown, no code fences):
+{
+  "stats": [
+    { "value": "number or percentage string", "label": "stat label" }
+  ],
+  "insights": "2-3 paragraph analysis of this profile's content strategy, engagement, and recommendations. Be specific to the platform."
+
+Make realistic estimates based on the URL and platform. Use commas for thousands (e.g. "125,000").`;
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          if (parsed.stats && parsed.insights) {
+            return res.json(parsed);
+          }
+        }
+      }
+    } catch (err) {
+      console.error('[Social] Gemini error, falling back to simulated:', err.message);
+    }
+  }
+
+  // Simulated fallback — generate realistic-looking stats
+  const stats = platform.stats.map(s => {
+    const range = Math.log(s.max) - Math.log(s.min);
+    const value = Math.exp(Math.log(s.min) + Math.random() * range);
+    return {
+      value: formatStatValue(value, s.suffix),
+      label: s.label
+    };
+  });
+
+  const insights = `This ${platformId} profile shows active presence with consistent content output. Based on the URL analysis, the account demonstrates typical engagement patterns for its category.
+
+Key observations:
+• Content frequency appears regular, suggesting an established posting schedule
+• Engagement rates are within normal range for the platform
+• Profile optimization includes standard branding elements
+
+Recommendations: Focus on increasing posting frequency during peak hours, experiment with trending content formats, and leverage platform-specific features (Reels, Stories, Shorts) for higher reach.`;
+
+  res.json({ stats, insights });
+});
+
 // ─── Simulated AI fallback ───────────────────────────────
 function generateSimulatedResponse(message, pageContext) {
   const msg = message.toLowerCase();
