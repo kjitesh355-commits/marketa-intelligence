@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 8765;
 
 app.use(express.json({ limit: '50mb' }));
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Google PageSpeed Insights API v5 route
 app.post('/api/check-seo', async (req, res) => {
@@ -1575,7 +1575,7 @@ app.post('/api/seo-mobile-desktop', async (req, res) => {
 
 // Serve main client routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {

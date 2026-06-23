@@ -1,0 +1,567 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings — MARKETA Intelligence</title>
+  <meta name="description" content="Configure your account, integrations, notifications, and branding for MARKETA Intelligence." />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+<div class="bg-perspective-grid"></div>
+<div class="bg-ambient-glow"></div>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div class="logo-text">MARKETA<span>AI</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+      <a href="analytics.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Analytics</a>
+      <a href="social.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Social Checker</a>
+      <a href="automation.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>Automation<span class="nav-badge">8</span></a>
+      <a href="audiences.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Audiences</a>
+      <a href="seo.html" class="nav-link" id="nav-seo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>SEO Checker</a>
+      <div class="nav-section-label">Research</div>
+      <a href="research.html" class="nav-link" id="nav-research"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Research Library</a>
+      <a href="keyword-research.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>Keyword Research<span class="nav-badge" style="background:var(--amber);color:#000">NEW</span></a>
+      <a href="marketing-agent.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>AI Agent<span class="nav-badge" style="background:var(--cyan);color:#000">NEW</span></a>
+      <div class="nav-section-label">Campaigns</div>
+      <a href="dashboard.html#campaigns" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Campaigns<span class="nav-badge">6</span></a>
+      <a href="integrations.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Integrations</a>
+      <a href="#" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
+      <a href="#" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>SMS</a>
+  </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar-placeholder sm" id="sidebar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Set your name</div>
+          <div class="sidebar-user-role">Click to set up profile</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title">Settings</div>
+        <div class="topbar-subtitle" id="greeting-text"></div>
+      </div>
+      <div class="topbar-clock" id="topbar-clock"></div>
+      <div class="topbar-actions">
+        <button class="notif-btn" onclick="showToast('3 notifications','info')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar-placeholder sm" id="topbar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+      </div>
+    </header>
+
+    <div class="page-inner">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Account Settings</h1>
+          <p class="page-description">Manage your profile, workspace, integrations, and security</p>
+        </div>
+        <button class="btn btn-primary btn-sm" id="save-settings-btn" onclick="savingSettings()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save Changes
+        </button>
+      </div>
+
+      <div class="settings-layout">
+        <!-- Settings Nav -->
+        <div class="settings-sidebar glass-card" style="padding:var(--space-3)">
+          <div class="settings-nav-item active" onclick="switchPanel('profile', this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Profile
+          </div>
+          <div class="settings-nav-item" onclick="switchPanel('workspace', this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Workspace
+          </div>
+          <div class="settings-nav-item" onclick="switchPanel('integrations', this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            Integrations
+          </div>
+          <div class="settings-nav-item" onclick="switchPanel('notifications', this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            Notifications
+          </div>
+          <div class="settings-nav-item" onclick="switchPanel('security', this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Security
+          </div>
+          <div class="settings-nav-item" onclick="switchPanel('billing', this)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Billing
+          </div>
+        </div>
+
+        <!-- Settings Panels -->
+        <div>
+          <!-- Profile Panel -->
+          <div class="settings-panel active" id="panel-profile">
+            <!-- Avatar -->
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Profile Photo</div>
+              <div style="display:flex;align-items:center;gap:var(--space-6)">
+                <div class="avatar-placeholder lg" id="profile-avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);width:72px;height:72px;font-size:1.5rem">U</div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+                  <button class="btn btn-ghost btn-sm" onclick="showToast('File picker opened','info')">Upload Photo</button>
+                  <span style="font-size:0.8125rem;color:var(--text-muted)">JPG, PNG, GIF up to 4MB</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Personal Info -->
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Personal Information</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+                <div class="settings-row">
+                  <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input class="form-input" id="setting-name" value="" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Company</label>
+                    <input class="form-input" id="setting-company" value="" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email Address</label>
+                  <input class="form-input" type="email" id="setting-email" value="" />
+                </div>
+                <div class="settings-row">
+                  <div class="form-group">
+                    <label class="form-label">Job Title / Role</label>
+                    <input class="form-input" id="setting-role" value="" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Industry</label>
+                    <input class="form-input" id="setting-industry" value="" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Timezone</label>
+                  <select class="form-select" id="setting-timezone">
+                    <option value="UTC+0 (London)">UTC+0 (London)</option>
+                    <option value="UTC+5:30 (Mumbai)">UTC+5:30 (Mumbai)</option>
+                    <option value="UTC-5 (New York)">UTC-5 (New York)</option>
+                    <option value="UTC-8 (Los Angeles)">UTC-8 (Los Angeles)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Workspace Panel -->
+          <div class="settings-panel" id="panel-workspace">
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Workspace Details</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+                <div class="form-group">
+                  <label class="form-label">Workspace Name</label>
+                  <input class="form-input" value="Acme Corp Marketing" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Workspace URL</label>
+                  <div style="display:flex;gap:0;border:1px solid var(--glass-border);border-radius:var(--radius-md);overflow:hidden">
+                    <span style="background:rgba(255,255,255,0.03);padding:10px 14px;font-size:0.875rem;color:var(--text-muted);white-space:nowrap;border-right:1px solid var(--glass-border)">app.marketa.ai/</span>
+                    <input class="form-input" value="acme-corp" style="border:none;border-radius:0;flex:1" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Industry</label>
+                  <select class="form-select">
+                    <option selected>E-Commerce / Retail</option>
+                    <option>SaaS / Software</option>
+                    <option>Healthcare</option>
+                    <option>Finance</option>
+                    <option>Media & Entertainment</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Team Members</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+                ${['Alex Johnson — Marketing Director','Priya Sharma — Campaign Manager','Ravi Mehta — Data Analyst','Sara Lee — Content Strategist'].map((m,i) => {
+                  const initials = m.split(' ').slice(0,2).map(n=>n[0]).join('');
+                  const colors = ['linear-gradient(135deg,#6366f1,#8b5cf6)','linear-gradient(135deg,#10b981,#059669)','linear-gradient(135deg,#f59e0b,#d97706)','linear-gradient(135deg,#22d3ee,#0891b2)'];
+                  const roles = ['Admin','Manager','Analyst','Editor'];
+                  return `<div class="integration-item">
+                    <div class="avatar-placeholder md" style="background:${colors[i]}">${initials}</div>
+                    <div class="integration-info"><div class="integration-name">${m.split(' — ')[0]}</div><div class="integration-desc">${m.split(' — ')[1]}</div></div>
+                    <span class="badge badge-${i===0?'indigo':i===1?'emerald':i===2?'amber':'cyan'}">${roles[i]}</span>
+                  </div>`;
+                }).join('')}
+              </div>
+              <button class="btn btn-ghost btn-sm" style="margin-top:var(--space-4)" onclick="showToast('Invite link copied to clipboard!','success')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Invite Team Member
+              </button>
+            </div>
+          </div>
+
+          <!-- Integrations Panel -->
+          <div class="settings-panel" id="panel-integrations">
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Connected Integrations</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+                <div class="integration-item">
+                  <div class="integration-logo" style="background:rgba(255,255,255,0.06)">🔵</div>
+                  <div class="integration-info"><div class="integration-name">Google Ads</div><div class="integration-desc">Syncing 4 campaigns · Last synced 2 min ago</div></div>
+                  <span class="badge badge-emerald"><span class="dot dot-emerald"></span>Connected</span>
+                </div>
+                <div class="integration-item">
+                  <div class="integration-logo" style="background:rgba(255,255,255,0.06)">🔷</div>
+                  <div class="integration-info"><div class="integration-name">Meta (Facebook & Instagram Ads)</div><div class="integration-desc">Syncing 3 ad accounts · Last synced 5 min ago</div></div>
+                  <span class="badge badge-emerald"><span class="dot dot-emerald"></span>Connected</span>
+                </div>
+                <div class="integration-item">
+                  <div class="integration-logo" style="background:rgba(255,255,255,0.06)">📧</div>
+                  <div class="integration-info"><div class="integration-name">Mailchimp</div><div class="integration-desc">Email lists synced · 24,100 contacts</div></div>
+                  <span class="badge badge-emerald"><span class="dot dot-emerald"></span>Connected</span>
+                </div>
+                <div class="integration-item">
+                  <div class="integration-logo" style="background:rgba(255,255,255,0.06)">🛍</div>
+                  <div class="integration-info"><div class="integration-name">Shopify</div><div class="integration-desc">E-commerce data · 18,420 orders synced</div></div>
+                  <span class="badge badge-emerald"><span class="dot dot-emerald"></span>Connected</span>
+                </div>
+                <div class="integration-item">
+                  <div class="integration-logo" style="background:rgba(255,255,255,0.06)">📊</div>
+                  <div class="integration-info"><div class="integration-name">HubSpot CRM</div><div class="integration-desc">Not connected — import contacts and deal stages</div></div>
+                  <button class="btn btn-ghost btn-sm" onclick="showToast('Opening HubSpot OAuth…','info')">Connect</button>
+                </div>
+                <div class="integration-item">
+                  <div class="integration-logo" style="background:rgba(255,255,255,0.06)">💼</div>
+                  <div class="integration-info"><div class="integration-name">LinkedIn Ads</div><div class="integration-desc">Not connected — B2B campaign tracking</div></div>
+                  <button class="btn btn-ghost btn-sm" onclick="showToast('Opening LinkedIn OAuth…','info')">Connect</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">API Access</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+                <div class="form-group">
+                  <label class="form-label">API Key</label>
+                  <div style="display:flex;gap:var(--space-3)">
+                    <input class="form-input" type="password" value="mk_live_xxxxxxxxxxxxxxxxxxxxxxxx" style="flex:1;font-family:monospace" readonly />
+                    <button class="btn btn-ghost btn-sm" onclick="showToast('API key copied!','success')">Copy</button>
+                    <button class="btn btn-ghost btn-sm" onclick="showToast('New API key generated!','info')">Regenerate</button>
+                  </div>
+                </div>
+                <div style="font-size:0.8125rem;color:var(--text-muted)">⚠️ Treat your API key like a password. Never share it publicly.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notifications Panel -->
+          <div class="settings-panel" id="panel-notifications">
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Email Notifications</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+                ${[
+                  ['Campaign Performance Alerts', 'Get notified when campaigns exceed or miss KPI targets', true],
+                  ['Budget Threshold Warnings', 'Alert when 80% of campaign budget is consumed', true],
+                  ['Automation Failures', 'Immediate alerts when workflow errors occur', true],
+                  ['Weekly Performance Summary', 'Every Monday morning digest of top metrics', true],
+                  ['New Subscriber Milestones', 'Celebrate audience growth milestones', false],
+                  ['Competitor Intel Reports', 'Monthly AI-powered competitive analysis', false],
+                ].map(([title, desc, checked]) => `
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)">
+                    <div>
+                      <div style="font-size:0.9rem;font-weight:600;margin-bottom:3px">${title}</div>
+                      <div style="font-size:0.8125rem;color:var(--text-secondary)">${desc}</div>
+                    </div>
+                    <label class="toggle">
+                      <input type="checkbox" ${checked ? 'checked' : ''} onchange="showToast('Notification preference saved','success',1500)" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Notification Channels</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+                <div class="form-group">
+                  <label class="form-label">Slack Webhook URL</label>
+                  <input class="form-input" placeholder="https://hooks.slack.com/services/…" value="https://hooks.slack.com/services/T0xx/B0xx/xxxx" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Alert Email</label>
+                  <input class="form-input" type="email" value="alerts@company.com" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Security Panel -->
+          <div class="settings-panel" id="panel-security">
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Change Password</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+                <div class="form-group">
+                  <label class="form-label">Current Password</label>
+                  <input class="form-input" type="password" placeholder="Enter current password" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">New Password</label>
+                  <input class="form-input" type="password" placeholder="Min. 8 characters" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Confirm New Password</label>
+                  <input class="form-input" type="password" placeholder="Repeat new password" />
+                </div>
+                <button class="btn btn-primary btn-sm" style="align-self:flex-start" onclick="showToast('Password updated successfully!','success')">Update Password</button>
+              </div>
+            </div>
+
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Two-Factor Authentication</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-6)">
+                <div>
+                  <div style="font-size:0.9rem;font-weight:600;margin-bottom:4px">Authenticator App (TOTP)</div>
+                  <div style="font-size:0.8125rem;color:var(--text-secondary)">Use Google Authenticator, Authy, or any TOTP app for enhanced security</div>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="showToast('2FA setup started','info')">Enable 2FA</button>
+              </div>
+            </div>
+
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Active Sessions</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+                ${[
+                  ['Windows — Chrome 124', 'Mumbai, IN', 'Current session'],
+                  ['macOS — Safari 17', 'Delhi, IN', 'Last active 2h ago'],
+                  ['iPhone — Safari Mobile', 'Mumbai, IN', 'Last active 4h ago'],
+                ].map(([device, location, status]) => `
+                  <div class="integration-item">
+                    <div style="width:36px;height:36px;border-radius:10px;background:var(--glass-bg);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;font-size:1rem">💻</div>
+                    <div class="integration-info">
+                      <div class="integration-name">${device}</div>
+                      <div class="integration-desc">${location} · ${status}</div>
+                    </div>
+                    ${status === 'Current session'
+                      ? '<span class="badge badge-emerald">Active</span>'
+                      : '<button class="btn btn-ghost btn-sm" onclick="showToast(\'Session revoked\',\'info\')">Revoke</button>'}
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Billing Panel -->
+          <div class="settings-panel" id="panel-billing">
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Current Plan</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-5);background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:var(--radius-md)">
+                <div>
+                  <div style="font-size:0.75rem;color:var(--indigo-light);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:var(--space-2)">Growth Plan</div>
+                  <div style="font-size:2rem;font-weight:900;margin-bottom:var(--space-2)">$149<span style="font-size:1rem;font-weight:400;color:var(--text-secondary)">/month</span></div>
+                  <div style="font-size:0.8125rem;color:var(--text-secondary)">Renews on July 21, 2025 · 50,000 contacts included</div>
+                </div>
+                <button class="btn btn-ghost btn-sm" onclick="showToast('Opening plan upgrade…','info')">Upgrade Plan</button>
+              </div>
+            </div>
+
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Usage This Month</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+                ${[
+                  ['Contacts', 38420, 50000, '#6366f1'],
+                  ['Emails Sent', 124800, 200000, '#22d3ee'],
+                  ['Automations', 8, 'Unlimited', '#10b981'],
+                  ['API Requests', 48200, 100000, '#f59e0b'],
+                ].map(([label, used, total, color]) => `
+                  <div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:var(--space-2)">
+                      <span style="font-weight:600">${label}</span>
+                      <span style="color:var(--text-secondary)">${typeof used === 'number' ? used.toLocaleString() : used} / ${typeof total === 'number' ? total.toLocaleString() : total}</span>
+                    </div>
+                    ${typeof total === 'number' ? `
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width:${Math.round(used/total*100)}%;background:${color}"></div>
+                      </div>
+                    ` : '<div style="font-size:0.8rem;color:#10b981">✓ Unlimited on your plan</div>'}
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="glass-card settings-section">
+              <div class="settings-section-title">Payment Method</div>
+              <div class="integration-item" style="margin-bottom:var(--space-4)">
+                <div class="integration-logo" style="background:rgba(255,255,255,0.06)">💳</div>
+                <div class="integration-info">
+                  <div class="integration-name">Visa ending in 4242</div>
+                  <div class="integration-desc">Expires 09/2027 · Default payment method</div>
+                </div>
+                <button class="btn btn-ghost btn-sm" onclick="showToast('Opening card update form','info')">Update</button>
+              </div>
+              <button class="btn btn-ghost btn-sm" onclick="showToast('Downloading invoice PDF…','success')">Download Latest Invoice</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+  function switchPanel(panelId, el) {
+    document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('panel-' + panelId).classList.add('active');
+  }
+
+  function savingSettings() {
+    const btn = document.getElementById('save-settings-btn');
+    btn.disabled = true;
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Saving…`;
+    setTimeout(() => {
+      var profile = JSON.parse(localStorage.getItem('marketa_profile') || '{}');
+      profile.name = document.getElementById('setting-name').value || profile.name || '';
+      profile.company = document.getElementById('setting-company').value || profile.company || '';
+      profile.email = document.getElementById('setting-email').value || profile.email || '';
+      profile.role = document.getElementById('setting-role').value || profile.role || '';
+      profile.industry = document.getElementById('setting-industry').value || profile.industry || '';
+      profile.timezone = document.getElementById('setting-timezone').value || profile.timezone || '';
+      localStorage.setItem('marketa_profile', JSON.stringify(profile));
+      updateSidebarUser(profile);
+      showToast('Settings saved!', 'success');
+      btn.disabled = false;
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Changes`;
+    }, 1400);
+  }
+
+  function updateSidebarUser(profile) {
+    var name = profile.name || 'User';
+    var initials = name.split(' ').map(function(w) { return w[0]; }).join('').toUpperCase().slice(0, 2);
+    var avatarEls = document.querySelectorAll('#user-avatar');
+    avatarEls.forEach(function(el) { el.textContent = initials; });
+    var userNameEl = document.querySelector('.sidebar-user-name');
+    if (userNameEl) userNameEl.textContent = name + (profile.company ? ' — ' + profile.company : '');
+    var userRoleEl = document.querySelector('.sidebar-user-role');
+    if (userRoleEl) userRoleEl.textContent = profile.role || profile.industry || '';
+    var profileAvatar = document.getElementById('profile-avatar');
+    if (profileAvatar) profileAvatar.textContent = initials;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var profile = JSON.parse(localStorage.getItem('marketa_profile') || '{}');
+    document.getElementById('setting-name').value = profile.name || '';
+    document.getElementById('setting-company').value = profile.company || '';
+    document.getElementById('setting-email').value = profile.email || '';
+    document.getElementById('setting-role').value = profile.role || '';
+    document.getElementById('setting-industry').value = profile.industry || '';
+    var tzSelect = document.getElementById('setting-timezone');
+    if (tzSelect && profile.timezone) {
+      for (var i = 0; i < tzSelect.options.length; i++) {
+        if (tzSelect.options[i].value === profile.timezone) {
+          tzSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+    updateSidebarUser(profile);
+  });
+
+  // Init progress bars
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.progress-fill').forEach(fill => {
+      const w = fill.style.width;
+      fill.style.width = '0%';
+      setTimeout(() => { fill.style.width = w; }, 200);
+    });
+  });
+</script>
+
+<!-- Animation Libraries (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<!-- Animation Scripts -->
+<script src="js/animations/scroll-reveal.js"></script>
+<script src="js/animations/gradient-border.js"></script>
+<script src="js/chatbot.js"></script>
+
+<!-- ── AI Marketing Chatbot Widget ─────────────────────────── -->
+<div id="chat-widget" class="chat-widget" data-page-context="settings">
+  <button class="chat-toggle" id="chat-toggle" aria-label="Toggle AI Assistant">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="12" cy="10" r="1"/></svg>
+  </button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-header-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div>
+          <div class="chat-header-title">AI Marketing Assistant</div>
+          <div class="chat-header-status" id="chat-config-status">
+            <span class="chat-status-dot"></span>
+            No key set
+          </div>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-clear-btn" id="chat-config-btn" aria-label="API key settings" title="Configure API key">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <button class="chat-clear-btn" id="chat-clear" aria-label="Clear conversation" title="Clear conversation">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+        <button class="chat-close-btn" id="chat-close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="chat-config" id="chat-config">
+      <div class="chat-config-row">
+        <input type="password" id="config-key" class="chat-config-input" placeholder="Paste your Gemini API key..." autocomplete="off" style="flex:1" />
+        <button class="chat-config-save" id="config-save">Save</button>
+      </div>
+      <div class="chat-config-hint">Get a free key at aistudio.google.com — Only Gemini 2.5 Flash is used.</div>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg bot">
+        <div class="msg-avatar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div class="msg-content">
+          <div class="msg-text">Hi! I'm your marketing AI. Ask me about SEO, analytics, or the audit results on this page.</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-suggestions" id="chat-suggestions">
+      <div class="suggestion-chip">How do I improve my SEO score?</div>
+      <div class="suggestion-chip">Explain Google Analytics bounce rate</div>
+      <div class="suggestion-chip">What is LCP in Core Web Vitals?</div>
+      <div class="suggestion-chip">Tips for social media</div>
+    </div>
+    <div class="chat-input-bar">
+      <input type="text" id="chat-input" placeholder="Ask about marketing, SEO, or data..." autocomplete="off" />
+      <button class="chat-send-btn" id="chat-send" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="js/profile.js"></script>
+</body>
+</html>

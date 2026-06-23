@@ -1,0 +1,476 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEO Checker — MARKETA Intelligence</title>
+  <meta name="description" content="Audit search engine optimization, performance metrics, accessibility, and Core Web Vitals." />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/seo.css" />
+</head>
+<body>
+<div class="bg-perspective-grid"></div>
+<div class="bg-ambient-glow"></div>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+
+<div class="app-shell">
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <div class="logo-text">MARKETA<span>AI</span></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-link" id="nav-dashboard">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a href="analytics.html" class="nav-link" id="nav-analytics">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Analytics
+      </a>
+      <a href="social.html" class="nav-link" id="nav-social">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        Social Checker
+      </a>
+      <a href="automation.html" class="nav-link" id="nav-automation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>
+        Automation
+        <span class="nav-badge">0</span>
+      </a>
+      <a href="audiences.html" class="nav-link" id="nav-audiences">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Audiences
+      </a>
+      <a href="seo.html" class="nav-link active" id="nav-seo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        SEO Checker
+      </a>
+
+      <div class="nav-section-label">Research</div>
+      <a href="research.html" class="nav-link" id="nav-research">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Research Library
+      </a>
+      <a href="keyword-research.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>Keyword Research<span class="nav-badge" style="background:var(--amber);color:#000">NEW</span></a>
+      <a href="marketing-agent.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>AI Agent<span class="nav-badge" style="background:var(--cyan);color:#000">NEW</span></a>
+
+      <div class="nav-section-label">Campaigns</div>
+      <a href="dashboard.html#campaigns" class="nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Campaigns
+        <span class="nav-badge">0</span>
+      </a>
+      <a href="integrations.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Integrations</a>
+      <a href="#" class="nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+      <a href="#" class="nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        SMS
+      </a>
+
+
+  </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar-placeholder sm" id="sidebar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Set your name</div>
+          <div class="sidebar-user-role">Click to set up profile</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main ───────────────────────────────────────────── -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title">SEO & Site Health Checker</div>
+        <div class="topbar-subtitle" id="greeting-text"></div>
+      </div>
+      <div class="topbar-clock" id="topbar-clock"></div>
+      <div class="topbar-actions">
+        <button class="notif-btn" onclick="showToast('3 notifications','info')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="avatar-placeholder sm" id="topbar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+      </div>
+    </header>
+
+    <div class="page-inner">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Website SEO & Core Web Vitals Auditor</h1>
+          <p class="page-description">Enter a public URL below to retrieve diagnostic results from the Google PageSpeed Insights engine.</p>
+        </div>
+      </div>
+
+      <!-- Audit Input Card -->
+      <div class="glass-card audit-search-card animate-fade-up">
+        <form id="seo-form" class="seo-search-form">
+          <div class="input-group">
+            <input type="text" id="target-url" placeholder="Enter website URL (e.g., https://example.com)" required />
+            <button type="submit" class="btn btn-primary" id="btn-scan">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              Analyze Website
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Loading State (Scanner) -->
+      <div class="scanner-container animate-fade-in" id="loading-state" style="display: none;">
+        <div class="scanner-beam"></div>
+        <svg class="scanner-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        <div class="scanner-text">Running full SEO & Performance scan. This may take up to 20 seconds...</div>
+      </div>
+
+      <!-- Results Container -->
+      <div id="results-state" style="display: none;">
+
+        <!-- Mobile/Desktop Toggle -->
+        <div class="seo-device-toggle" id="device-toggle-bar" style="display:none">
+          <span class="seo-device-label">Device:</span>
+          <button class="seo-device-btn active" data-device="mobile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Mobile</button>
+          <button class="seo-device-btn" data-device="desktop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Desktop</button>
+          <span class="seo-device-diff" id="device-diff"></span>
+        </div>
+        
+        <!-- Score Circular Gauges Grid -->
+        <div class="grid-4 animate-fade-up">
+          
+          <!-- Performance -->
+          <div class="glass-card gauge-card">
+            <div class="gauge-svg-wrap">
+              <svg class="gauge-svg" viewBox="0 0 36 36">
+                <path class="gauge-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="gauge-stroke" id="gauge-perf" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="gauge-value" id="val-perf">0</div>
+            </div>
+            <div class="gauge-label">Performance</div>
+          </div>
+
+          <!-- SEO -->
+          <div class="glass-card gauge-card">
+            <div class="gauge-svg-wrap">
+              <svg class="gauge-svg" viewBox="0 0 36 36">
+                <path class="gauge-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="gauge-stroke" id="gauge-seo" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="gauge-value" id="val-seo">0</div>
+            </div>
+            <div class="gauge-label">SEO</div>
+          </div>
+
+          <!-- Accessibility -->
+          <div class="glass-card gauge-card">
+            <div class="gauge-svg-wrap">
+              <svg class="gauge-svg" viewBox="0 0 36 36">
+                <path class="gauge-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="gauge-stroke" id="gauge-access" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="gauge-value" id="val-access">0</div>
+            </div>
+            <div class="gauge-label">Accessibility</div>
+          </div>
+
+          <!-- Best Practices -->
+          <div class="glass-card gauge-card">
+            <div class="gauge-svg-wrap">
+              <svg class="gauge-svg" viewBox="0 0 36 36">
+                <path class="gauge-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="gauge-stroke" id="gauge-best" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="gauge-value" id="val-best">0</div>
+            </div>
+            <div class="gauge-label">Best Practices</div>
+          </div>
+
+        </div>
+
+        <!-- Core Web Vitals Table -->
+        <div class="glass-card table-card animate-fade-up" style="margin-top: var(--space-6)">
+          <div class="table-card-header">
+            <div>
+              <div class="chart-card-title">Core Web Vitals Assessment</div>
+              <div class="chart-card-subtitle" id="assessment-url-label">Real-user field experience and lab diagnostics</div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table mono-table">
+              <thead>
+                <tr>
+                  <th>Core Web Vitals Metric</th>
+                  <th>Good Threshold</th>
+                  <th>Observed Value</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Largest Contentful Paint (LCP)</strong></td>
+                  <td class="mono">&le; 2.5 s</td>
+                  <td class="mono font-bold" id="val-lcp">N/A</td>
+                  <td><span class="status-badge" id="badge-lcp">Pending</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Cumulative Layout Shift (CLS)</strong></td>
+                  <td class="mono">&le; 0.1</td>
+                  <td class="mono font-bold" id="val-cls">N/A</td>
+                  <td><span class="status-badge" id="badge-cls">Pending</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Interaction to Next Paint (INP)</strong></td>
+                  <td class="mono">&le; 200 ms</td>
+                  <td class="mono font-bold" id="val-inp">N/A</td>
+                  <td><span class="status-badge" id="badge-inp">Pending</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ═══ Score Explanation Cards ═══ -->
+        <div class="seo-score-cards" id="score-explanation-cards" style="display:none">
+          <div class="seo-score-card glass-card" id="score-card-perf">
+            <div class="seo-sc-header"><span class="seo-sc-badge" id="sc-badge-perf"></span><span class="seo-sc-title">Performance</span></div>
+            <div class="seo-sc-verdict" id="sc-verdict-perf"></div>
+            <div class="seo-sc-issues" id="sc-issues-perf"></div>
+            <div class="seo-sc-quickwin" id="sc-quickwin-perf"></div>
+          </div>
+          <div class="seo-score-card glass-card" id="score-card-seo">
+            <div class="seo-sc-header"><span class="seo-sc-badge" id="sc-badge-seo"></span><span class="seo-sc-title">SEO</span></div>
+            <div class="seo-sc-verdict" id="sc-verdict-seo"></div>
+            <div class="seo-sc-issues" id="sc-issues-seo"></div>
+            <div class="seo-sc-quickwin" id="sc-quickwin-seo"></div>
+          </div>
+          <div class="seo-score-card glass-card" id="score-card-access">
+            <div class="seo-sc-header"><span class="seo-sc-badge" id="sc-badge-access"></span><span class="seo-sc-title">Accessibility</span></div>
+            <div class="seo-sc-verdict" id="sc-verdict-access"></div>
+            <div class="seo-sc-issues" id="sc-issues-access"></div>
+            <div class="seo-sc-quickwin" id="sc-quickwin-access"></div>
+          </div>
+          <div class="seo-score-card glass-card" id="score-card-best">
+            <div class="seo-sc-header"><span class="seo-sc-badge" id="sc-badge-best"></span><span class="seo-sc-title">Best Practices</span></div>
+            <div class="seo-sc-verdict" id="sc-verdict-best"></div>
+            <div class="seo-sc-issues" id="sc-issues-best"></div>
+            <div class="seo-sc-quickwin" id="sc-quickwin-best"></div>
+          </div>
+        </div>
+
+        <!-- ═══ Full On-Page SEO Audit ═══ -->
+        <div id="onpage-audit" style="display:none">
+
+          <!-- Meta Tags -->
+          <div class="seo-audit-section glass-card">
+            <div class="seo-audit-header" onclick="this.closest('.seo-audit-section').classList.toggle('open')">
+              <span class="seo-audit-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg> Meta Tags</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="seo-audit-body" id="audit-meta-tags"></div>
+          </div>
+
+          <!-- Heading Structure -->
+          <div class="seo-audit-section glass-card">
+            <div class="seo-audit-header" onclick="this.closest('.seo-audit-section').classList.toggle('open')">
+              <span class="seo-audit-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><path d="M4 12h8M4 18h8M4 6h16"/></svg> Heading Structure</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="seo-audit-body" id="audit-headings"></div>
+          </div>
+
+          <!-- Image SEO -->
+          <div class="seo-audit-section glass-card">
+            <div class="seo-audit-header" onclick="this.closest('.seo-audit-section').classList.toggle('open')">
+              <span class="seo-audit-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Image SEO</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="seo-audit-body" id="audit-images"></div>
+          </div>
+
+          <!-- Links Audit -->
+          <div class="seo-audit-section glass-card">
+            <div class="seo-audit-header" onclick="this.closest('.seo-audit-section').classList.toggle('open')">
+              <span class="seo-audit-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Links Audit</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="seo-audit-body" id="audit-links"></div>
+          </div>
+
+          <!-- Canonical & Indexability -->
+          <div class="seo-audit-section glass-card">
+            <div class="seo-audit-header" onclick="this.closest('.seo-audit-section').classList.toggle('open')">
+              <span class="seo-audit-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Canonical & Indexability</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="seo-audit-body" id="audit-canonical"></div>
+          </div>
+
+          <!-- Structured Data -->
+          <div class="seo-audit-section glass-card">
+            <div class="seo-audit-header" onclick="this.closest('.seo-audit-section').classList.toggle('open')">
+              <span class="seo-audit-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Structured Data (Schema.org)</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="seo-audit-body" id="audit-schema"></div>
+          </div>
+
+          <!-- Robots & Sitemap -->
+          <div class="seo-audit-section glass-card">
+            <div class="seo-audit-header" onclick="this.closest('.seo-audit-section').classList.toggle('open')">
+              <span class="seo-audit-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Robots & Sitemap</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="seo-audit-body" id="audit-robots"></div>
+          </div>
+
+          <!-- Page Speed Opportunities -->
+          <div class="seo-audit-section glass-card">
+            <div class="seo-audit-header" onclick="this.closest('.seo-audit-section').classList.toggle('open')">
+              <span class="seo-audit-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg> Page Speed Opportunities</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="seo-audit-body" id="audit-opportunities"></div>
+          </div>
+
+        </div>
+
+        <!-- ═══ Priority Fix Roadmap ═══ -->
+        <div class="seo-roadmap-card glass-card" id="roadmap-card" style="display:none">
+          <div class="seo-roadmap-header"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Your SEO Fix Roadmap</div>
+          <div class="seo-roadmap-subtitle">Fix these in order for maximum impact</div>
+          <div class="table-wrap">
+            <table class="data-table" id="roadmap-table">
+              <thead>
+                <tr><th>#</th><th>Fix</th><th>Impact</th><th>Effort</th></tr>
+              </thead>
+              <tbody id="roadmap-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ═══ AI SEO Expert Analysis ═══ -->
+        <div class="seo-ai-card glass-card" id="ai-analysis-card" style="display:none">
+          <div class="seo-ai-header"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg> AI SEO Expert Analysis</div>
+          <div class="seo-ai-loading" id="ai-loading" style="display:none">
+            <div class="kr-loading-bars"><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div></div>
+            <div class="kr-loading-label">AI is analyzing your site…</div>
+          </div>
+          <div class="seo-ai-body" id="ai-analysis-body"></div>
+          <div class="seo-ai-followup">
+            <input type="text" id="ai-followup-input" class="seo-ai-input" placeholder="Ask a follow-up: e.g. 'Why is my LCP high?' or 'Write me a meta description'" autocomplete="off" />
+            <button class="seo-ai-send-btn" id="ai-followup-send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+          </div>
+        </div>
+
+        <!-- ═══ Quick Code Fixes ═══ -->
+        <div class="seo-code-card glass-card" id="code-fixes-card" style="display:none">
+          <div class="seo-code-header"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Quick Code Fixes</div>
+          <div class="seo-code-panels" id="code-fixes-panels"></div>
+        </div>
+
+        <!-- ═══ Export & Share ═══ -->
+        <div class="seo-export-bar" id="export-bar" style="display:none">
+          <button class="seo-export-btn" id="btn-export-pdf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Download PDF Report</button>
+          <button class="seo-export-btn" id="btn-copy-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Shareable Link</button>
+          <button class="seo-export-btn" id="btn-save-research"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> Save to Research Library</button>
+        </div>
+
+      </div>
+
+    </div><!-- /page-inner -->
+  </main>
+</div><!-- /app-shell -->
+
+<script src="js/main.js"></script>
+<script src="js/seo.js"></script>
+
+
+<!-- Animation Libraries (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<!-- Animation Scripts -->
+<script src="js/animations/seo-scanner.js"></script>
+<script src="js/animations/scroll-reveal.js"></script>
+
+<script src="js/animations/gradient-border.js"></script>
+<script src="js/chatbot.js"></script>
+
+<!-- ── AI Marketing Chatbot Widget ─────────────────────────── -->
+<div id="chat-widget" class="chat-widget" data-page-context="seo">
+  <button class="chat-toggle" id="chat-toggle" aria-label="Toggle AI Assistant">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="12" cy="10" r="1"/></svg>
+  </button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-header-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div>
+          <div class="chat-header-title">AI Marketing Assistant</div>
+          <div class="chat-header-status" id="chat-config-status">
+            <span class="chat-status-dot"></span>
+            No key set
+          </div>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-clear-btn" id="chat-config-btn" aria-label="API key settings" title="Configure API key">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <button class="chat-clear-btn" id="chat-clear" aria-label="Clear conversation" title="Clear conversation">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+        <button class="chat-close-btn" id="chat-close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="chat-config" id="chat-config">
+      <div class="chat-config-row">
+        <input type="password" id="config-key" class="chat-config-input" placeholder="Paste your Gemini API key..." autocomplete="off" style="flex:1" />
+        <button class="chat-config-save" id="config-save">Save</button>
+      </div>
+      <div class="chat-config-hint">Get a free key at aistudio.google.com — Only Gemini 2.5 Flash is used.</div>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg bot">
+        <div class="msg-avatar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div class="msg-content">
+          <div class="msg-text">Hi! I'm your marketing AI. Ask me about SEO, analytics, or the audit results on this page.</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-suggestions" id="chat-suggestions">
+      <div class="suggestion-chip">How do I improve my SEO score?</div>
+      <div class="suggestion-chip">Explain Google Analytics bounce rate</div>
+      <div class="suggestion-chip">What is LCP in Core Web Vitals?</div>
+      <div class="suggestion-chip">Tips for social media</div>
+    </div>
+    <div class="chat-input-bar">
+      <input type="text" id="chat-input" placeholder="Ask about marketing, SEO, or data..." autocomplete="off" />
+      <button class="chat-send-btn" id="chat-send" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="js/profile.js"></script>
+</body>

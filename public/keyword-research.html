@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keyword Research Intelligence — MARKETA Intelligence</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/keyword-research.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+<body>
+<div class="bg-perspective-grid"></div>
+<div class="bg-ambient-glow"></div>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+
+<div class="app-shell">
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div class="logo-text">MARKETA<span>AI</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+      <a href="analytics.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Analytics</a>
+      <a href="social.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Social Checker</a>
+      <a href="automation.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>Automation<span class="nav-badge pulse-badge">0</span></a>
+      <a href="audiences.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Audiences</a>
+      <a href="seo.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>SEO Checker</a>
+      <div class="nav-section-label">Research</div>
+      <a href="research.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Research Library</a>
+      <a href="keyword-research.html" class="nav-link active sidebar-glow-active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>Keyword Research<span class="nav-badge" style="background:var(--amber);color:#000">NEW</span></a>
+      <a href="marketing-agent.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>AI Agent<span class="nav-badge" style="background:var(--cyan);color:#000">NEW</span></a>
+      <div class="nav-section-label">Campaigns</div>
+      <a href="dashboard.html#campaigns" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Campaigns<span class="nav-badge">0</span></a>
+      <a href="integrations.html" class="nav-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Integrations</a>
+  </nav>
+    <div class="sidebar-recent" id="sidebar-recent">
+      <div class="nav-section-label">Recent Searches</div>
+      <div class="recent-list" id="recent-list"></div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar-placeholder sm" id="sidebar-avatar" style="background:linear-gradient(135deg,#00D9FF,#0ea5e9)">?</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Set your name</div>
+          <div class="sidebar-user-role">Click to set up profile</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main ───────────────────────────────────────────── -->
+  <main class="main-content">
+    <header class="topbar">
+      <button class="mobile-menu-btn" id="menu-toggle" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="topbar-left">
+        <div class="topbar-title">Keyword Research Intelligence</div>
+        <div class="topbar-subtitle" id="greeting-text"></div>
+      </div>
+      <div class="topbar-clock" id="topbar-clock"></div>
+      <div class="topbar-actions">
+        <div class="agent-status-badge" id="agent-status-badge">
+          <div class="status-orb" id="status-orb"></div>
+          <span id="status-text">Ready</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-inner">
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- KEYWORD INPUT BAR                                  -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="kr-input-bar glass-card" id="kr-input-bar">
+        <div class="kr-input-row">
+          <div class="kr-input-wrapper">
+            <svg class="kr-input-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="kr-seed-keyword" class="kr-seed-input" placeholder="Enter seed keyword… (e.g. digital marketing Dubai)" autocomplete="off" />
+            <button class="kr-clear-btn" id="kr-clear" title="Clear"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <div class="kr-location-row">
+            <div class="kr-loc-group">
+              <label class="kr-loc-label">Industry</label>
+              <input type="text" id="kr-industry" class="kr-loc-input" placeholder="e.g. Digital Marketing" />
+            </div>
+            <div class="kr-loc-group">
+              <label class="kr-loc-label">Location</label>
+              <input type="text" id="kr-location" class="kr-loc-input" placeholder="e.g. UAE" />
+            </div>
+            <div class="kr-loc-group">
+              <label class="kr-loc-label">Goal</label>
+              <select id="kr-goal" class="kr-loc-input kr-select">
+                <option value="leads">Leads</option>
+                <option value="sales">Sales</option>
+                <option value="traffic">Traffic</option>
+                <option value="branding">Branding</option>
+              </select>
+            </div>
+            <div class="kr-loc-group">
+              <label class="kr-loc-label">Platform</label>
+              <select id="kr-platform" class="kr-loc-input kr-select">
+                <option value="all">All</option>
+                <option value="google">Google Ads</option>
+                <option value="meta">Meta Ads</option>
+                <option value="seo">SEO</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <button class="kr-analyze-btn" id="kr-analyze-btn">
+          <span class="kr-btn-content"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Analyze Keywords</span>
+          <span class="kr-btn-loading" style="display:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin-icon"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>Analyzing…</span>
+        </button>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- TAB NAVIGATION                                     -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="kr-tabs">
+        <button class="kr-tab active" data-tab="explorer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Keyword Explorer</button>
+        <button class="kr-tab" data-tab="trends"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Trend Analysis</button>
+        <button class="kr-tab" data-tab="strategy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg>AI Keyword Strategy</button>
+        <button class="kr-tab" data-tab="competitor"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Competitor Keywords</button>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- TAB 1: KEYWORD EXPLORER                            -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="kr-tab-content active" id="tab-explorer">
+        <!-- Empty State -->
+        <div class="kr-empty-state" id="explorer-empty">
+          <div class="kr-empty-icon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+          <h3>Enter a keyword to explore</h3>
+          <p>Type a seed keyword above and click <strong>Analyze Keywords</strong> to discover related keywords, search intent, and opportunities.</p>
+        </div>
+        <!-- Loading State -->
+        <div class="kr-loading" id="explorer-loading" style="display:none">
+          <div class="kr-loading-bars"><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div></div>
+          <div class="kr-loading-label">Discovering keywords…</div>
+        </div>
+        <!-- Results -->
+        <div class="kr-results" id="explorer-results" style="display:none">
+          <!-- Keyword Cloud -->
+          <div class="kr-cloud-card glass-card">
+            <div class="kr-cloud-header"><span class="kr-cloud-title">Keyword Cloud</span></div>
+            <canvas id="kr-cloud-canvas" width="800" height="300"></canvas>
+          </div>
+          <!-- Intent Donut -->
+          <div class="kr-row-2">
+            <div class="kr-donut-card glass-card">
+              <div class="kr-donut-header"><span>Intent Breakdown</span></div>
+              <canvas id="kr-donut-canvas" width="250" height="250"></canvas>
+              <div id="kr-donut-legend" class="kr-donut-legend"></div>
+            </div>
+            <div class="kr-stats-card glass-card">
+              <div class="kr-donut-header"><span>Summary</span></div>
+              <div id="kr-summary-stats" class="kr-summary-stats"></div>
+            </div>
+          </div>
+          <!-- Keyword Table -->
+          <div class="kr-table-card glass-card">
+            <div class="kr-table-header">
+              <span class="kr-table-title">All Keywords <span id="kr-total-count" class="kr-badge"></span></span>
+              <div class="kr-table-actions">
+                <button class="kr-action-btn" id="kr-export-csv"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>
+                <button class="kr-action-btn" id="kr-copy-keywords"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
+                <button class="kr-action-btn" id="kr-send-agent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>Send to AI Agent</button>
+              </div>
+            </div>
+            <div class="kr-table-wrap">
+              <table class="kr-table" id="kr-keyword-table">
+                <thead>
+                  <tr>
+                    <th class="kr-th sortable" data-sort="keyword">Keyword</th>
+                    <th class="kr-th" data-sort="intent">Intent</th>
+                    <th class="kr-th" data-sort="difficulty">Difficulty</th>
+                    <th class="kr-th" data-sort="funnel">Funnel</th>
+                    <th class="kr-th sortable" data-sort="priority">Priority</th>
+                  </tr>
+                </thead>
+                <tbody id="kr-keyword-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- TAB 2: TREND ANALYSIS                              -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="kr-tab-content" id="tab-trends">
+        <div class="kr-empty-state" id="trends-empty">
+          <div class="kr-empty-icon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h3>No trend data yet</h3>
+          <p>Run a keyword analysis first to see trend data, regional interest, and rising queries.</p>
+        </div>
+        <div class="kr-loading" id="trends-loading" style="display:none">
+          <div class="kr-loading-bars"><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div></div>
+          <div class="kr-loading-label">Fetching trend data…</div>
+        </div>
+        <div class="kr-results" id="trends-results" style="display:none">
+          <!-- Interest Over Time -->
+          <div class="kr-chart-card glass-card">
+            <div class="kr-chart-header"><span>Interest Over Time</span></div>
+            <canvas id="kr-trend-canvas" width="800" height="280"></canvas>
+          </div>
+          <!-- Regional Interest -->
+          <div class="kr-row-2">
+            <div class="kr-chart-card glass-card">
+              <div class="kr-chart-header"><span>Top Regions</span></div>
+              <div id="kr-regional-bars" class="kr-regional-bars"></div>
+            </div>
+            <div class="kr-chart-card glass-card">
+              <div class="kr-chart-header"><span>Rising Queries</span></div>
+              <div id="kr-rising-queries" class="kr-rising-queries"></div>
+            </div>
+          </div>
+          <!-- Seasonality -->
+          <div class="kr-insight-card glass-card" id="kr-seasonality-card" style="display:none">
+            <div class="kr-insight-header"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Seasonality Insights</div>
+            <div id="kr-seasonality-text" class="kr-insight-body"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- TAB 3: AI KEYWORD STRATEGY                         -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="kr-tab-content" id="tab-strategy">
+        <div class="kr-empty-state" id="strategy-empty">
+          <div class="kr-empty-icon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg></div>
+          <h3>AI Strategy awaits</h3>
+          <p>Run a keyword analysis first, then generate a complete keyword strategy with clusters, content ideas, and an SEO roadmap.</p>
+        </div>
+        <div class="kr-loading" id="strategy-loading" style="display:none">
+          <div class="kr-loading-bars"><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div></div>
+          <div class="kr-loading-label">Generating AI strategy…</div>
+        </div>
+        <div class="kr-results" id="strategy-results" style="display:none"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- TAB 4: COMPETITOR KEYWORDS                         -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="kr-tab-content" id="tab-competitor">
+        <div class="kr-competitor-input glass-card">
+          <div class="kr-comp-row">
+            <div class="kr-comp-field">
+              <label class="kr-loc-label">Competitor Domain</label>
+              <input type="text" id="kr-comp-url" class="kr-loc-input" placeholder="e.g. competitor.com" />
+            </div>
+            <button class="kr-analyze-btn kr-analyze-sm" id="kr-comp-analyze">
+              <span class="kr-btn-content"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Analyze</span>
+              <span class="kr-btn-loading" style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin-icon"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>Scanning…</span>
+            </button>
+          </div>
+        </div>
+        <div class="kr-empty-state" id="competitor-empty">
+          <div class="kr-empty-icon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Analyze a competitor</h3>
+          <p>Enter a competitor's domain to discover their targeting keywords, content gaps, and opportunities to outperform them.</p>
+        </div>
+        <div class="kr-loading" id="competitor-loading" style="display:none">
+          <div class="kr-loading-bars"><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div><div class="kr-loading-bar"></div></div>
+          <div class="kr-loading-label">Scanning competitor…</div>
+        </div>
+        <div class="kr-results" id="competitor-results" style="display:none"></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Chatbot Widget -->
+<div id="chat-widget" class="chat-widget" data-page-context="Keyword Research">
+  <button class="chat-toggle" id="chat-toggle" aria-label="Toggle AI Assistant"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="12" cy="10" r="1"/></svg></button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header"><div class="chat-header-info"><div class="chat-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg></div><div><div class="chat-header-title">AI Marketing Assistant</div><div class="chat-header-status" id="chat-config-status"><span class="chat-status-dot"></span>No key set</div></div></div><div class="chat-header-actions"><button class="chat-clear-btn" id="chat-config-btn" title="Configure API key"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><button class="chat-clear-btn" id="chat-clear" title="Clear conversation"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button><button class="chat-close-btn" id="chat-close">✕</button></div></div>
+    <div class="chat-config" id="chat-config"><div class="chat-config-row"><input type="password" id="config-key" class="chat-config-input" placeholder="Paste your Gemini API key..." autocomplete="off" style="flex:1" /><button class="chat-config-save" id="config-save">Save</button></div><div class="chat-config-hint">Get a free key at aistudio.google.com</div></div>
+    <div class="chat-messages" id="chat-messages"><div class="chat-msg bot"><div class="msg-avatar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.27A7 7 0 0 1 14 23h-4a7 7 0 0 1-6.73-5H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/></svg></div><div class="msg-content"><div class="msg-text">Hi! I'm your marketing AI. Ask me about keyword strategy, SEO, or competitor analysis.</div></div></div></div>
+    <div class="chat-suggestions" id="chat-suggestions"><div class="suggestion-chip">How do I find low-competition keywords?</div><div class="suggestion-chip">What keywords does my competitor rank for?</div><div class="suggestion-chip">Best keywords for UAE market?</div><div class="suggestion-chip">How to build keyword clusters?</div></div>
+    <div class="chat-input-bar"><input type="text" id="chat-input" placeholder="Ask about keywords, SEO, strategy..." autocomplete="off" /><button class="chat-send-btn" id="chat-send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/chatbot.js"></script>
+<script src="js/keyword-research.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>
