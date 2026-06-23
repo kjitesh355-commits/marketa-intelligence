@@ -77,10 +77,8 @@ button { cursor: pointer; font-family: var(--font); border: none; background: no
 input, select, textarea { font-family: var(--font); outline: none; border: none; }
 
 /* ─── Scrollbar ──────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(0,217,255,0.25); border-radius: var(--radius-full); }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,217,255,0.45); }
+::-webkit-scrollbar { width: 0; height: 0; }
+* { scrollbar-width: none; }
 
 /* ─── Typography ─────────────────────────────────────────── */
 .text-gradient {
