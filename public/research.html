@@ -17,6 +17,10 @@
       overflow: hidden;
     }
 
+    @media (max-width: 768px) {
+      .research-layout { grid-template-columns: 1fr; height: auto; overflow: visible; }
+    }
+
     /* Left Panel - Files */
     .research-files-panel {
       border-right: 1px solid var(--glass-border);
@@ -932,6 +936,5 @@ function toggleSidebar(){
   document.body.style.overflow=sb.classList.contains('open')?'hidden':'';
 }
 </script>
-</body>
 </body>
 </html>
