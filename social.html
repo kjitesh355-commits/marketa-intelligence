@@ -301,6 +301,14 @@
       font-size: 0.875rem;
     }
     .error-toast.visible { display: block; }
+
+    @media (max-width: 768px) {
+      .platforms-grid { grid-template-columns: 1fr !important; }
+      .recent-grid { grid-template-columns: 1fr !important; }
+      .mobile-2col { grid-template-columns: 1fr !important; }
+      .mobile-3col { grid-template-columns: 1fr !important; }
+      .url-input-row { flex-direction: column !important; }
+    }
   </style>
 </head>
 <body>
@@ -376,7 +384,7 @@
                 <div style="font-size:0.8125rem;color:var(--text-secondary)">Enter any YouTube, Instagram, TikTok, X, LinkedIn, or Facebook URL to see insights</div>
               </div>
             </div>
-            <div style="display:flex;gap:12px;align-items:stretch">
+            <div class="url-input-row">
               <div style="flex:1;position:relative">
                 <input type="text" id="social-url-input" placeholder="https://youtube.com/@channel or instagram.com/username..." style="width:100%;padding:14px 16px 14px 44px;border-radius:var(--radius-md);border:1px solid var(--glass-border);background:rgba(0,0,0,0.3);color:var(--text-primary);font-size:0.9375rem;transition:border-color 0.2s" autocomplete="off" />
                 <svg class="url-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" style="position:absolute;left:14px;top:50%;transform:translateY(-50%)"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
@@ -659,7 +667,7 @@
         </div>
 
         <!-- Connect Panels (Coming Soon) -->
-        <div class="connect-panels" style="margin-top:var(--space-6);display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4)">
+        <div class="connect-panels mobile-2col" style="margin-top:var(--space-6);gap:var(--space-4)">
           <!-- Google Analytics Panel -->
           <div class="glass-card connect-panel disabled" style="padding:var(--space-6);position:relative;overflow:hidden;opacity:0.7">
             <div class="coming-soon-badge" style="position:absolute;top:16px;right:16px;background:rgba(245,158,11,0.15);color:#f59e0b;padding:4px 10px;border-radius:6px;font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em">Coming Soon</div>
@@ -672,7 +680,7 @@
                 <div style="font-size:0.8125rem;color:var(--text-secondary)">Track website traffic, user behavior, and conversion metrics</div>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:var(--space-4)">
+            <div class="mobile-2col social-insights-grid" style="margin-bottom:var(--space-4)">
               <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;text-align:center">
                 <div style="font-size:1.25rem;font-weight:800;color:var(--text-muted)">--</div>
                 <div style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase">Sessions</div>
@@ -730,7 +738,7 @@
                 <span style="font-size:0.75rem;color:#1877f2;font-weight:600">Facebook</span>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:var(--space-4)">
+            <div class="mobile-2col social-insights-grid" style="margin-bottom:var(--space-4)">
               <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;text-align:center">
                 <div style="font-size:1.25rem;font-weight:800;color:var(--text-muted)">--</div>
                 <div style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase">Total Followers</div>

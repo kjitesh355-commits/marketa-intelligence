@@ -7,6 +7,11 @@
   <meta name="description" content="Build and manage intelligent multi-step marketing automation workflows." />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/app.css" />
+<style>
+@media (max-width: 768px) {
+  .mobile-4col { grid-template-columns: 1fr !important; }
+}
+</style>
 </head>
 <body>
 <div class="bg-perspective-grid"></div>
@@ -93,7 +98,7 @@
       </div>
 
       <!-- Stats Bar -->
-      <div class="grid-4" style="grid-template-columns:repeat(3,1fr)">
+      <div class="grid-4">
         <div class="glass-card" style="padding:var(--space-5);display:flex;align-items:center;gap:var(--space-4)">
           <div style="width:44px;height:44px;border-radius:var(--radius-md);background:rgba(16,185,129,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -201,7 +206,7 @@
       <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:var(--space-2)">TRIGGER</div>
       <div style="font-size:0.9rem;font-weight:600" id="wf-modal-trigger"></div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-bottom:var(--space-6)">
+    <div class="mobile-4col grid-4-col-sm" style="margin-bottom:var(--space-6)">
       <div style="text-align:center">
         <div style="font-size:1.5rem;font-weight:800;margin-bottom:4px" id="wf-modal-sent">—</div>
         <div style="font-size:0.75rem;color:var(--text-muted)">Sent</div>

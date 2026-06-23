@@ -834,6 +834,10 @@
   .meta-ad-mock, .google-ad-mock { max-width: 100%; }
   .followup-input-bar { padding: var(--space-3) var(--space-4); }
   .report-section-body { overflow-wrap: break-word; }
+  .funnel-label { width: 70px; font-size: 0.75rem; }
+  .bench-row-label { width: 70px; font-size: 0.6875rem; }
+  .followup-messages { padding: var(--space-3) var(--space-4); }
+  .mode-btn { flex: none; }
 }
 
 /* Phone */
@@ -866,6 +870,9 @@
   .toast-container { bottom: var(--space-3); right: var(--space-3); left: var(--space-3); }
   .toast { width: 100%; }
   .agent-status-badge { padding: 4px 10px; font-size: 0.6875rem; }
+  .followup-msg { max-width: 100%; }
+  .empty-state { min-height: 280px; }
+  .followup-chat { max-height: 200px; }
 }
 
 /* Extra small */

@@ -533,6 +533,10 @@
   .kr-th, .kr-td { padding: 8px 10px; font-size: 0.6875rem; }
   .kr-comp-row { flex-direction: column; }
   .kr-comp-field { min-width: auto; }
+  .kr-reg-label { width: 70px; font-size: 0.75rem; }
+  #kr-cloud-canvas { height: 220px; }
+  #kr-trend-canvas { height: 200px; }
+  .kr-diff-bar { width: 60px; }
 }
 @media (max-width: 480px) {
   .page-inner { padding: var(--space-3); gap: var(--space-3); }

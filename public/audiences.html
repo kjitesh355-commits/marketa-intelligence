@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/app.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    @media (max-width: 768px) {
+      .mobile-2col { grid-template-columns: 1fr !important; }
+    }
+  </style>
 </head>
 <body>
 <div class="bg-perspective-grid"></div>
@@ -126,7 +131,7 @@
       <button onclick="closeModal('segment-modal-overlay')" class="btn-icon" style="font-size:1.2rem">×</button>
     </div>
     <p id="seg-modal-desc" style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:var(--space-6)"></p>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4);margin-bottom:var(--space-6)">
+    <div class="mobile-2col" style="gap:var(--space-4);margin-bottom:var(--space-6)">
       <div class="glass-card" style="padding:var(--space-4)">
         <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:var(--space-1)">Total Contacts</div>
         <div style="font-size:1.5rem;font-weight:800" id="seg-modal-count">—</div>
