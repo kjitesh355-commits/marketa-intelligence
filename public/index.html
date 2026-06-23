@@ -34,11 +34,23 @@
     <li><a href="#testimonials" class="nav-link-item">Testimonials</a></li>
   </ul>
 
+  <button class="landing-hamburger" id="landing-hamburger" onclick="toggleLandingMenu()" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
   <div class="nav-cta">
     <a href="dashboard.html" class="btn btn-ghost btn-sm">Log In</a>
     <a href="dashboard.html" class="btn btn-primary btn-sm">Start Free Trial</a>
   </div>
 </nav>
+
+<div class="landing-mobile-menu" id="landing-mobile-menu">
+  <a href="#features" class="mobile-menu-link" onclick="closeLandingMenu()">Features</a>
+  <a href="#how-it-works" class="mobile-menu-link" onclick="closeLandingMenu()">How It Works</a>
+  <a href="#testimonials" class="mobile-menu-link" onclick="closeLandingMenu()">Testimonials</a>
+  <div class="mobile-menu-divider"></div>
+  <a href="dashboard.html" class="btn btn-ghost" style="width:100%;justify-content:center">Log In</a>
+  <a href="dashboard.html" class="btn btn-primary" style="width:100%;justify-content:center">Start Free Trial</a>
+</div>
 
 <!-- ── Hero ──────────────────────────────────────────────── -->
 <section class="hero">
@@ -411,5 +423,15 @@
 <script src="js/background.js"></script>
 <script src="js/tilt.js"></script>
 <script src="js/clock.js"></script>
+<script>
+function toggleLandingMenu(){
+  document.getElementById('landing-mobile-menu').classList.toggle('open');
+  document.getElementById('landing-hamburger').classList.toggle('open');
+}
+function closeLandingMenu(){
+  document.getElementById('landing-mobile-menu').classList.remove('open');
+  document.getElementById('landing-hamburger').classList.remove('open');
+}
+</script>
 </body>
 </html>

@@ -51,10 +51,14 @@
       </div>
     </div>
   </aside>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
   <!-- ── Main ────────────────────────────────────────────── -->
   <main class="main-content">
     <header class="topbar">
+      <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
       <div class="topbar-left">
         <div class="topbar-title">Automation</div>
         <div class="topbar-subtitle" id="greeting-text"></div>
@@ -298,5 +302,14 @@
   </div>
 </div>
 <script src="js/profile.js"></script>
+<script>
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('sidebar-overlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('active');
+  document.body.style.overflow=sb.classList.contains('open')?'hidden':'';
+}
+</script>
 </body>
 </html>
